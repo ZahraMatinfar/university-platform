@@ -1,0 +1,13 @@
+username,password,firstname,lastname,user_id,user_type,field_name,field_code
+95991311,4210z,Zahra,Matinfar,95991311,0,Computer,11
+95991312,4210s,Sana,Saroughi,95991312,0,Computer,11
+95991313,4210m,Marjan,Azizi,95991313,0,Computer,11
+94991212,4210e,Elahe,Shokri,94991212,0,Physics,22
+96001910,4210a,Ali,Asghari,96001910,0,Physics,22
+97021890,4210n,Nazanin,Shakour,97021890,0,Physics,22
+97991013,4210l,Leila,Ghomi,97991013,0,Biomedical engineering,33
+95991818,4210v,Vida,Barzegaran,95991818,0,Biomedical engineering,33
+95991416,4210s,Sepehr,Matin,95991416,0,Biomedical engineering,33
+35800111,4210ap,Samira,Zand,35800111,1,Computer,11
+36101112,4210ac,Negin,Danesh,36101112,1,Physics,22
+35111113,4210ab,Nastaran,Magham,35111113,1,Biomedical engineering,33
