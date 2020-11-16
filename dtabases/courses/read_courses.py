@@ -1,3 +1,6 @@
+"""
+we need courses_list to generate our objects later.
+"""
 import csv
 
 courses_list = []
