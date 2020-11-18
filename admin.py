@@ -1,9 +1,11 @@
-from user import User
-from course import Course
 import logging
+
+from course import Course
+from user import User
 from write_courses import write_courses
 
 logging.basicConfig(filename="msg.log", filemode='a', level=logging.DEBUG, format='%(asctime)s - %(message)s')
+
 
 class Admin(User):
     students_list = r'D:\maktabsharif\python_project\university-platform\dtabases\users\users_db'
@@ -17,28 +19,28 @@ class Admin(User):
         show menu to admin
         :return: nothing
         """
-        super().menu_message()
+        #super().menu_message()
         print('3.Define a course\n4.Show students\n5.Choose student\n6.Check student courses(Pass or Reject)')
 
-    def define_course(self, name, units, total_quantity, teacher_name, course_code, field_name, field_code):
+    @staticmethod
+    def define_course():
         """
         define a course with method attributes
         :return: nothing
         """
-        self.name = name
-        self.units = units
-        self.total_quantity = total_quantity
-        self.remaining_quantity = total_quantity
-        self.teacher_name = teacher_name
-        self.course_code = course_code
-        self.field_code = field_code
-        self.field_name = field_name
-        # write_courses(self.name, units, total_quantity, teacher_name, course_code, field_name, field_code)
-        write_courses(
-            [self.name, self.units, self.total_quantity, self.remaining_quantity, self.teacher_name, self.course_code,
-             self.field_code, self.field_name])
+        name = input()
+        units = input()
+        total_quantity = input()
+        teacher_name = input()
+        course_code = input()
+        field_name = input()
+        field_code = input()
+        new_course = Course(name, units, total_quantity, teacher_name, course_code, field_name, field_code)
+        write_courses([new_course.name, new_course.units, new_course.total_quantity, new_course.teacher_name,
+                       new_course.course_code, new_course.field_name, new_course.field_code])
+
         # log add a lesson
-        logging.info("a lesson is added")
+        # logging.info("a lesson is added")
 
     @staticmethod
     def show_students(self):
