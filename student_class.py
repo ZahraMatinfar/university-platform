@@ -1,21 +1,23 @@
 import csv
 
-from admin import Admin
 from course import Course
+from dtabases.courses.read_courses import read_db
 from user import User
 
 
 class Student(User):
-    def __init__(self,username, password, user_id, firstname, lastname, user_type, field_name, field_code):
-        self.check_admin = True
+    # initialize student attributes
+    def __init__(self, username, password, user_id, firstname, lastname, user_type, field_name, field_code):
+        self.take_courses_status = True
         self.total_units = 0
-        self.available_courses=[]
-        self.chosen_courses=[]
+        self.available_courses = []
+        self.chosen_courses = []
         super().__init__(username, password, user_id, firstname, lastname, user_type, field_name, field_code)
 
+    # overload str method for print student information
     def __str__(self):
-        # show student information:name/id/total units
-        return super.__str__() + str(self.total_units)
+        return super().__str__(username, password, user_id, firstname, lastname, user_type, field_name,
+                               field_code) + str(self.total_units)
 
     @staticmethod
     def menu_message():
@@ -24,7 +26,8 @@ class Student(User):
         :return: nothing
         """
         print('Please Select an option from the following menu:\n')
-        print('1.Offered courses in current semester\n2.Take course\n3.Drop course\n4.Student courses\n5.Submit courses\n')
+        print(
+            '1.Offered courses in current semester\n2.Take course\n3.Drop course\n4.Student courses\n5.Submit courses\n')
 
     def check_units(self):
         """
@@ -42,82 +45,92 @@ class Student(User):
 
     def define_available_courses(self):
         """
-        print list of defined courses for student field
+        select list of defined courses for student field from all courses
+        :return: self.available_courses
 
         """
-        # csv_file = csv.reader(open('courses.csv', "r"), delimiter=",")
-        # # search courses in file by matching field codes
-        # for row in csv_file:
-        #     if self.field_code == row[5]:
-        #         print(row)
 
-        courses_list =read_db()#it should be return of read_courss.py read_db func #remember import
-        self.available_courses=[]
+        courses_list = read_db()
+        self.available_courses = []
         for course in courses_list:
-            if self.field_code == course['field_code'] or course['field_code']==0:
-                self.available_courses.append(Course(course['name'],course['units'],course['total_quantity'],course['techer_name'],course['course_code'],course['field_code']))
+            if self.field_code == course['field_code'] or course['field_code'] == 0:
+                self.available_courses.append(
+                    Course(course['name'], course['units'], course['total_quantity'], course['teacher_name'],
+                           course['course_code'], course['field_code']))
         return self.available_courses
+
+    # print available courses for student when 'Offered courses in current semester' option  in menu selected
     def show_available_courses(self):
         for course in self.available_courses:
             print(course)
 
-    def add_course(self,course_code):
-        # with open('student_chosen_courses.csv', 'a', newline='')as std_courses:
-        #     fieldnames = ['name', 'units', 'total_quantity', 'teacher_name', 'course_code', 'field_code']
-        #     writer = csv.DictWriter(std_courses, fieldnames=fieldnames)
-            # search courses in file by matching field codes
+    def add_course(self, course_code):
+        """
+        add specified course in student chosen_courses list when 'Take course' option selected from menu
+        :param course_code:
+        :return: True if course have enough quantity,else:False
+        """
+        for course in self.available_courses:
+            # self.available_courses contains list of Course objects
+            if course_code == course.course_code:
+                # check that course has enough quantity
+                if course.check_quantity:
+                    course.remaining_quantity -= 1
+                    self.total_units += course.units
 
-        for row in self.available_courses:
-            if course_code == row.course_code:
-                if row.check_quantity:
-                    row.remaining_quantity -=1
-                    self.chosen_courses.append(row)
+                    self.chosen_courses.append(course)
                     return True
                 else:
                     return False
 
-
-                # writer.writerow({'name': row, 'units': row[1],
-                #                      'total_quantity': row[2], 'teacher_name': row[3],
-                #                      'course_code': row[4], 'field_code': row[5]})
-
-
-
-
-
-
-
-    def drop_course(self,course_code):
-        for row in self.available_courses:
-            if course_code == row.course_code:
-                row.remaining_quantity += 1
-                self.chosen_courses.remove(row)
+    def drop_course(self, course_code):
+        """
+        delete specified course in student chosen_courses list when 'Drop course' option selected from menu
+        :param course_code:
+        :return: nothing
+        """
+        for course in self.available_courses:
+            if course_code == course.course_code:
+                course.remaining_quantity += 1
+                self.total_units -= course.units
+                self.chosen_courses.remove(course)
 
     def show_chosen_courses(self):
-        # print list of courses
+        # print student chosen courses
         for course in self.chosen_courses:
             print(course)
 
     def submit(self):
-        # send chosen courses for admin to approve or reject
+        """
+        final step of take course is submit courses and save them in the file
+        so admin can check and approve or reject them
+        :return: True if number of units are between 10 and 20/else:False
+        """
+
         if self.check_units() != -1 and self.check_units() != 1:
-            # with open( csv_file,'r')#read only
-            # return file for admin use
-
-            with open('student_chosen_courses.csv', 'a', newline='')as std_courses:
-                fieldnames = ['student_id','courses']
-                writer = csv.DictWriter(std_courses, fieldnames=fieldnames)
-                for row in self.chosen_courses:
-                    course_info=[row.name,row.units,row.total_quantity,row.teacher_name,row.course_code,row.field_code]
-                    writer.writerow({'student_id':self.user_id,'courses':course_info})
+            with open('students_info.csv', 'a', newline='') as csv_file:
+                w1 = csv.DictWriter(csv_file, fieldnames='student_id')
+                w1.writeheader()
+                field_names = ['name', 'course_code']
+                w2 = csv.DictWriter(csv_file, fieldnames=field_names)
+                w2.writeheader()
+                w1.writerow(
+                    {f'self.student_id': w2.writerow({'name': course.name, 'course_code': course.course_code}) for
+                     course in self.chosen_courses})
             return True
-
         else:
+            # if number of student total units < 10 or >20 courses not accepted and remove from list
+            for course in self.chosen_courses:
+                course.remaining_quantity += 1
+                self.total_units -= course.units
             return False
 
-
     def show_submitted_courses(self):
-        if self.check_admin:
+        """
+        after submit courses show final chosen courses depending on that admin approve or reject them
+        :return:
+        """
+        if self.take_courses_status:
             self.show_chosen_courses()
         else:
             print('your request has been rejected')

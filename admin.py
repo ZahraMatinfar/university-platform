@@ -1,5 +1,6 @@
+import dtabases.courses.read_courses as db
+
 from user import User
-import dtabases.courses.read_corses as db
 
 
 # logging.basicConfig(filename="msg.log", filemode='a', level=logging.DEBUG, format='%(asctime)s - %(message)s')
