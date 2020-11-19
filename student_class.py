@@ -19,6 +19,11 @@ class Student(User):
         return super().__str__(username, password, user_id, firstname, lastname, user_type, field_name,
                                field_code) + str(self.total_units)
 
+    def __iadd__(self, other):
+        self.total_units +=other
+    def __isub__(self, other):
+        self.total_units -= other
+
     @staticmethod
     def menu_message():
         """
