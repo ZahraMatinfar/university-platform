@@ -21,27 +21,27 @@ class Admin(User):
 
         db.write_db(name, units, total_quantity, teacher_name, course_code, field_code)
 
-    def show_students(self, students_list):
+    def show_students(self, student):
         """
         Show students list whit specifications
         :param students_list: list of students in all fields
         :return: nothing
         """
-        for user in students_list:
-            if user.field_code == self.field_code:
-                print(user)
+        # for user in students_list:
+        if student.field_code == self.field_code:
+            print(student)
 
-    def choose_student(self, user_id, students_list):
+    def choose_student(self, user_id, student):
         """
         Choose student with id and then show selected units and lessons
         :param user_id: id for selected user that admin want to see lessons
         :param students_list: list of students in all fields
         :return: nothing
         """
-        for user in students_list:
-            if user.user_id == user_id:
-                for lesson in user.chosen_courses:
-                    print(lesson)
+        # for user in students_list:
+        if student.user_id == user_id:
+            for lesson in student.chosen_courses:
+                print(lesson)
 
     def check_student_course(self, student, status):
         """
@@ -51,4 +51,4 @@ class Admin(User):
         :return: nothing
         """
         if not status:
-            student.status = False
+            student.take_courses_status = False

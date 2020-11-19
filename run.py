@@ -21,6 +21,9 @@ def show_students():
     for student in students:
         admin.show_students(student)
 
+def define_course():
+    admin.define_course(self, name, units, total_quantity, teacher_name, course_code, field_code)
+
 def choose_student():
     user_id = input("Inter User ID")
     for student in students:
