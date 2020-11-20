@@ -44,7 +44,7 @@ def main():
     try:
         choice = int(input('your choice:'))
     except ValueError:
-        print('invalid input,choose a number in menu.\n')
+        print('invalid input,choose a number in menu. \n')
         logging.exception('invalid input in main function')
         main()
     else:

@@ -2,7 +2,7 @@ from run_project.read_databases import students_list
 import logging
 import re
 
-logging.basicConfig(filename="../msg.log", filemode='a', level=logging.DEBUG, format='%(asctime)s - %(message)s')
+logging.basicConfig(filename='../msg.log', filemode='a', level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
 
 def admin_login(admin):

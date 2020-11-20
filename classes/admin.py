@@ -26,7 +26,7 @@ class Admin(User):
 
     def show_students(self, students_list):
         """
-        Show students list whit specifications
+        Show students list whit specifications.
         :param students_list: list of Student in same field with admin
         :return: nothing
         """

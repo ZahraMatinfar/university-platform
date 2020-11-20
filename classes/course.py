@@ -1,7 +1,7 @@
 class Course:
     def __init__(self, name, units, total_quantity, teacher_name, course_code, field_code):
         """
-        remaining_quantity is defined because we need to save total quantity and save changing in another variable
+        remaining_quantity is defined because we need to save total quantity  and save changing in another variable
         """
         self.name = name
         self.units = units

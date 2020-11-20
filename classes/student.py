@@ -60,6 +60,8 @@ class Student(User):
                     Course(course['name'], int(course['units']), int(course['total_quantity']), course['teacher_name'],
                            int(course['course_code']), int(course['field_code'])))
 
+
+
     def show_available_courses(self):
         """
         print available courses for student when 'Offered courses in current semester' option  in menu selected
@@ -114,7 +116,7 @@ class Student(User):
                 return False
 
     def show_chosen_courses(self):
-        """print student chosen courses """
+        """print student chosen courses"""
         if len(self.chosen_courses) == 0:
             print('No courses have been added yet.')
         else:
@@ -136,13 +138,13 @@ class Student(User):
 
         if self.check_units() != -1 and self.check_units() != 1:
             with open('students_info.csv', 'a', newline='') as csv_file:
-                write_student_info = csv.DictWriter(csv_file, fieldnames='student_id')
+                write_student_info = csv.DictWriter(csv_file, fieldnames='student_id ')
                 write_student_info.writeheader()
                 field_names = ['name', 'course_code']
                 write_course_info = csv.DictWriter(csv_file, fieldnames=field_names)
                 write_course_info.writeheader()
                 write_student_info.writerow(
-                    {f'self.student_id': write_course_info.writerow(
+                    {f'{self.user_id}': write_course_info.writerow(
                         {'name': course.name, 'course_code': course.course_code}) for
                         course in self.chosen_courses})
             return True
@@ -154,7 +156,12 @@ class Student(User):
         after submit courses show final chosen courses depending on that admin approve or reject them
         :return:nothing
         """
+        submited_course=[]
         if self.take_courses_status:
             self.show_chosen_courses()
         else:
             print('your request has been rejected')
+
+
+
+

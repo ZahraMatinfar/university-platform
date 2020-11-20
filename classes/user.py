@@ -4,7 +4,7 @@ from hashlib import sha256
 class User:
     def __init__(self, username, password, user_id, first_name, last_name, user_type, field_name, field_code):
         """
-        login status is False/True .False means User is not logged in   &  True means User is logged in successfully
+        login status is False/True .False means User is not logged in   &  True means User is logged in successfully.
         :param username: username
         :param password: password
         :param user_id: Personnel Code(for admin)/student code(for student)
