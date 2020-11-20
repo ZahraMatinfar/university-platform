@@ -12,47 +12,62 @@ def student_login(student):
     """
     # print menu for student
     student.menu_message()
+    student.defined_available_courses()
     try:
         choice = int(input('your choice:'))
+    except ValueError:
+        print('invalid input,choose a number .\n')
+        logging.exception('invalid input in student menu')
+    else:
         if choice == 1:
             # show available courses that defined for student field
-            student.defined_available_courses()
-            student.show_available_courses()
+            if len(student.available_courses) == 0:
+                print('No courses have been defined for you yet')
+            else:
+                student.show_available_courses()
 
         elif choice == 2:
-            available_courses = student.defined_available_courses()
-            if len(available_courses) == 0:
+            if len(student.available_courses) == 0:
                 print('No courses have been defined for you yet')
                 logging.warning('Try take course before courses defined')
 
             else:
-                take = student.add_course(course_code=int(input('course code:')))
-                # if quantity of course is complete,take returned False
-                if not take:
-                    print('course quantity is complete.')
-                    logging.warning('Try take full course.')
-                # if course didnt choose already by student and have enough quantity,take is True
-                elif take:
-                    student.show_chosen_courses()
-                    logging.info('Student added a new course')
-                # if take is None:
+                try:
+                    course_code = int(input('course code:'))
+                except ValueError:
+                    print('invalid input,Enter a number .\n')
+                    logging.warning('invalid input for course code[Try take course]')
                 else:
-                    print('This course already has been chosen by you .')
+                    take = student.add_course(course_code)
+                    # if quantity of course is complete,take returned False
+                    if not take:
+                        print('course capacity is complete.')
+                        logging.warning('Try take full course.')
+                    # if course didnt choose already by student and have enough quantity,take is True
+                    elif take:
+                        student.show_chosen_courses()
+                        logging.info('Student added a new course')
+                    # if take is None:
+                    else:
+                        print('This course already has been chosen by you .')
 
         elif choice == 3:
             student.show_chosen_courses()
-            if len(student.chosen_courses) == 0:
-                print('you didn\'t choose any course.')
-            elif student.drop_course(course_code=input('course code:')):
-                print('Course dropped successfully.')
-                logging.info('Student dropped a course')
+            try:
+                course_code = int(input('course code:'))
+            except ValueError:
+                print('invalid input,Enter a number .\n')
+                logging.exception('invalid input for course code[Try drop course]')
             else:
-                print('Code is not valid.')
-                logging.warning('invalid course code for dropping')
+                if student.drop_course(course_code):
+                    print('Course dropped successfully.')
+                    logging.info('Student dropped a course')
+                else:
+                    print('Code is not valid.')
+                    logging.warning('invalid course code for dropping')
 
         elif choice == 4:
             student.show_chosen_courses()
-
         elif choice == 5:
             if student.submit():
                 print('submission is successfully.')
@@ -69,9 +84,5 @@ def student_login(student):
             return False
         else:
             print('Unavailable option,choose another number!')
-
-    except ValueError:
-        print('invalid input,choose a number .\n')
-        logging.warning('invalid input in student menu')
 
     return True

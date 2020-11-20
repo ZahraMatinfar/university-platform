@@ -49,7 +49,7 @@ class Student(User):
     def defined_available_courses(self):
         """
         select list of defined courses for student field from all courses
-        :return: self.available_courses
+        :return: nothing
         """
 
         courses_list = read_db()
@@ -58,8 +58,6 @@ class Student(User):
                 self.available_courses.append(
                     Course(course['name'], int(course['units']), int(course['total_quantity']), course['teacher_name'],
                            int(course['course_code']), int(course['field_code'])))
-        return self.available_courses
-
 
     def show_available_courses(self):
         """
@@ -109,9 +107,12 @@ class Student(User):
                 return False
 
     def show_chosen_courses(self):
-        # print student chosen courses
-        for course in self.chosen_courses:
-            print(course)
+        """print student chosen courses """
+        if len(self.chosen_courses) == 0:
+            print('No courses have been added yet.')
+        else:
+            for course in self.chosen_courses:
+                print(course)
 
     def submit(self):
         """

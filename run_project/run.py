@@ -42,6 +42,11 @@ def main():
     print('choose an option:\n1.login\n2.exit\n')
     try:
         choice = int(input('your choice:'))
+    except ValueError:
+        print('invalid input,choose a number in menu.\n')
+        logging.exception('invalid input in main function')
+        main()
+    else:
         if choice == 1:
             username = input('\nEnter your username:')
             password = input('Enter your password:')
@@ -51,10 +56,9 @@ def main():
         elif choice == 2:
             print('have a good time')
             exit()
-    except ValueError:
-        print('invalid input,choose a number in menu.\n')
-        logging.warning('invalid input in main function')
-        main()
+        else:
+            print('This number is not a number in menu.\n')
+            main()
 
 
 if __name__ == '__main__':

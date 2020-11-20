@@ -10,8 +10,11 @@ def admin_login(admin):
     admin.menu_message()
     try:
         choice = int(input('your choice:'))
+    except ValueError:
+        print('invalid input,choose a number.\n')
+        logging.exception('invalid input in admin login')
+    else:
         # menu: Please Select an option from the following menu:1.Define a course.2.Show students.3.Choose student.4.logout
-
         if choice == 1:
             admin.define_course(name=input('course name:'), units=input('course units:'),
                                 total_quantity=input('total quantity:'), teacher_name=input('teacher name:'),
@@ -43,7 +46,4 @@ def admin_login(admin):
             return False
         else:
             print('The number of your choice is not in menu')
-    except ValueError:
-        print('invalid input,choose a number.\n')
-        logging.warning('invalid input in admin login')
     return True
