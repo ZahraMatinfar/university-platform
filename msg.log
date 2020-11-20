@@ -62,3 +62,4 @@ Traceback (most recent call last):
     choice = int(input('your choice:'))
 ValueError: invalid literal for int() with base 10: 'p'
 2020-11-20 21:07:06,236 - Unsuccessful student  submission
+2020-11-20 22:06:23,087 - Wrong username or password

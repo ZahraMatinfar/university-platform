@@ -25,7 +25,7 @@ class Admin(User):
 
     def show_students(self, students_list):
         """
-        Show students list whit specifications
+        Show students list whit specifications.
         :param students_list: list of Student in same field with admin
         :return: nothing
         """
@@ -55,7 +55,7 @@ class Admin(User):
         :return: nothing
         """
         if student.submit():  # if student submitted her courses
-            if not status: # if number of student units are not acceptable
+            if not status:  # if number of student units are not acceptable
                 student.take_courses_status = False
                 logging.error("Courses Rejected")
             else:

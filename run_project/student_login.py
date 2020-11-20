@@ -16,7 +16,7 @@ def student_login(student):
     try:
         choice = int(input('your choice:'))
     except ValueError:
-        print('invalid input,choose a number .\n')
+        print('invalid input,choose a number . \n')
         logging.exception('invalid input in student menu')
     else:
         if choice == 1:
