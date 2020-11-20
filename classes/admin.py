@@ -1,6 +1,7 @@
 import logging
 from classes.user import User
 import databases.course.read_courses as db
+from prettytable import PrettyTable
 
 
 class Admin(User):
@@ -29,9 +30,13 @@ class Admin(User):
         :param students_list: list of Student in same field with admin
         :return: nothing
         """
+        table = PrettyTable(
+            ['id', 'first name', 'last name', 'field name', 'field code'])  # create table of students with same field
         for student in students_list:
             if student.field_code == self.field_code:
-                print(student)
+                table.add_row(
+                    [student.user_id, student.first_name, student.last_name, student.field_name, student.field_code])
+        print(table)
 
     @staticmethod
     def choose_student(user_id, student):
@@ -42,9 +47,14 @@ class Admin(User):
         :return: nothing
         """
         # for user in students_list:
+
+        table = PrettyTable(
+            ['course code', 'course name', 'units', 'teacher name', 'field code'])
         if student.user_id == user_id:
             for lesson in student.chosen_courses:
-                print(lesson)
+                table.add_row(
+                    [lesson.course_code, lesson.name, lesson.units, lesson.teacher_name, lesson.field_code])
+            print(table)
 
     @staticmethod
     def check_student_course(student, status):
@@ -55,7 +65,7 @@ class Admin(User):
         :return: nothing
         """
         if student.submit():  # if student submitted her courses
-            if not status: # if number of student units are not acceptable
+            if not status:  # if number of student units are not acceptable
                 student.take_courses_status = False
                 logging.error("Courses Rejected")
             else:

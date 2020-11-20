@@ -3,6 +3,7 @@ import csv
 from classes.course import Course
 from classes.user import User
 from databases.course.read_courses import read_db
+from prettytable import PrettyTable
 
 
 class Student(User):
@@ -65,8 +66,14 @@ class Student(User):
         :return:nothing
         """
 
-        for course in self.available_courses:
-            print(course)
+        table = PrettyTable(
+            ['course code', 'course name', 'units', 'teacher name', 'field code', 'total quantity'])
+
+        for lesson in self.available_courses:
+            table.add_row(
+                [lesson.course_code, lesson.name, lesson.units, lesson.teacher_name, lesson.field_code,
+                 lesson.total_quantity])
+        print(table)
 
     def add_course(self, course_code):
         """
@@ -111,8 +118,14 @@ class Student(User):
         if len(self.chosen_courses) == 0:
             print('No courses have been added yet.')
         else:
-            for course in self.chosen_courses:
-                print(course)
+            table = PrettyTable(
+                ['course code', 'course name', 'units', 'teacher name', 'field code', 'total quantity'])
+
+            for lesson in self.chosen_courses:
+                table.add_row(
+                    [lesson.course_code, lesson.name, lesson.units, lesson.teacher_name, lesson.field_code,
+                     lesson.total_quantity])
+            print(table)
 
     def submit(self):
         """

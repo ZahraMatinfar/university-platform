@@ -23,6 +23,7 @@ def successful_login(user):
     if user.is_admin():
         for admin in admins_list:
             if admin.user_id == user.user_id:
+
                 while admin_login(admin):
                     admin_login(admin)
                 else:

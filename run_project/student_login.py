@@ -1,4 +1,5 @@
 import logging
+import os
 
 logging.basicConfig(filename="../msg.log", filemode='a', level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
@@ -25,6 +26,7 @@ def student_login(student):
                 print('No courses have been defined for you yet')
             else:
                 student.show_available_courses()
+
 
         elif choice == 2:
             if len(student.available_courses) == 0:
@@ -84,5 +86,4 @@ def student_login(student):
             return False
         else:
             print('Unavailable option,choose another number!')
-
     return True
