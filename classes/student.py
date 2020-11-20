@@ -60,13 +60,15 @@ class Student(User):
                            int(course['course_code']), int(course['field_code'])))
         return self.available_courses
 
-    # print available courses for student when 'Offered courses in current semester' option  in menu selected
+
     def show_available_courses(self):
-        if len(self.available_courses) == 0:
-            print('no course is available,yet')
-        else:
-            for course in self.available_courses:
-                print(course)
+        """
+        print available courses for student when 'Offered courses in current semester' option  in menu selected
+        :return:nothing
+        """
+
+        for course in self.available_courses:
+            print(course)
 
     def add_course(self, course_code):
         """

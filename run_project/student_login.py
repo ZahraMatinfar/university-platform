@@ -41,8 +41,10 @@ def student_login(student):
 
         elif choice == 3:
             student.show_chosen_courses()
-            if student.drop_course(course_code=input('course code:')):
-                print('Course dropped successfully')
+            if len(student.chosen_courses) == 0:
+                print('you didn\'t choose any course.')
+            elif student.drop_course(course_code=input('course code:')):
+                print('Course dropped successfully.')
                 logging.info('Student dropped a course')
             else:
                 print('Code is not valid.')
@@ -58,7 +60,7 @@ def student_login(student):
                 student.show_submitted_courses()
             else:
                 print('You can\'t submit.Your unit number is low or too much. ')
-                logging.warning('Student unsuccessful submission')
+                logging.warning('Unsuccessful student  submission')
 
         elif choice == 6:
             student.logout()
