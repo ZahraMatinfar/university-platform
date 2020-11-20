@@ -8,7 +8,7 @@ def student_login(student):
     # menu: 1.Offered courses in current semester.2.Take course.3.Drop course4.Student courses.5.Submit courses.6.logout
 
     if choice == 1:
-        student.defined_available_courses()
+        student.show_available_courses()
 
     elif choice == 2:
         student.show_available_courses()
