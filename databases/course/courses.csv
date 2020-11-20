@@ -1,0 +1,22 @@
+name,units,total_quantity,teacher_name,course_code,field_code
+Biomedical Engineering,3,3,Ahmadi,121,33
+Pulse Circuit,3,3,Ghasemi,122,33
+Circuit,3,3,Fallah,123,33
+Electronic,3,3,Afshar,124,33
+Logic circuit,3,2,Fard,125,33
+Database,3,4,Daneshpour,131,11
+Artificial intelligence,3,2,Amiri,132,11
+Logic circuit,3,3,Mohammadi,133,11
+Os Lab,1,3,Pazouki,134,11
+Software engineering ,3,3,Pazouki,135,11
+Physics lab,1,4,Alavi,141,22
+Quantum mechanics,4,3,Asghari,142,22
+Thermodynamics,3,2,Hooshmand,143,22
+Electromagnetism,3,3,Razavi,144,22
+Optic,3,2,Matin,145,22
+English,3,5,Arghand,111,0
+Sport1,1,5,Esfandiari,112,0
+History,2,6,Rasta,113,0
+Sport2,1,6,Saket,114,0
+Farsi,3,7,Afrasiab,115,0
+

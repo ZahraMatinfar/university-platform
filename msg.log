@@ -1,0 +1,40 @@
+2020-11-20 12:12:51,973 - Wrong username or password
+2020-11-20 12:20:53,514 - Successful login
+2020-11-20 12:20:53,514 - Wrong username or password
+2020-11-20 12:48:02,106 - Successful login
+2020-11-20 12:57:33,470 - Successful login
+2020-11-20 13:03:43,112 - Successful login
+2020-11-20 13:04:17,401 - Successful login
+2020-11-20 13:05:42,850 - Successful login
+2020-11-20 13:07:42,484 - Successful login
+2020-11-20 13:09:26,734 - Successful login
+2020-11-20 13:14:21,200 - Successful login
+2020-11-20 13:20:36,117 - Successful login
+2020-11-20 13:21:24,418 - Successful login
+2020-11-20 13:25:00,135 - Admin logout
+2020-11-20 13:26:50,366 - Student logout
+2020-11-20 13:26:50,366 - Successful login
+2020-11-20 13:27:46,841 - New course defined!
+2020-11-20 13:27:46,842 - Successful login
+2020-11-20 13:29:40,496 - Student submitted courses
+2020-11-20 13:29:43,806 - Student logout
+2020-11-20 13:31:43,684 - Student logout
+2020-11-20 13:32:45,997 - Student logout
+2020-11-20 13:35:50,521 - Student added a new course
+2020-11-20 13:36:10,562 - Student logout
+2020-11-20 14:48:06,287 - Student logout
+2020-11-20 14:49:56,377 - Successful login
+2020-11-20 14:57:06,261 - Wrong username or password
+2020-11-20 15:06:29,583 - Student added a new course
+2020-11-20 15:12:16,022 - Try take full course.
+2020-11-20 15:13:19,777 - Student added a new course
+2020-11-20 15:13:49,394 - Student submitted courses
+2020-11-20 15:16:39,797 - Student added a new course
+2020-11-20 15:24:18,024 - Student added a new course
+2020-11-20 15:26:01,960 - Student added a new course
+2020-11-20 15:31:47,225 - Wrong username or password
+2020-11-20 15:32:06,619 - invalid input in admin login
+2020-11-20 15:44:53,606 - Wrong username or password
+2020-11-20 15:45:45,302 - Try change status student without choosing
+2020-11-20 16:15:32,788 - New course defined!
+2020-11-20 16:16:44,169 - New course defined!

@@ -1,6 +1,6 @@
 import logging
-from user import User
-import dtabases.courses.read_corses as db
+from classes.user import User
+import databases.course.read_courses as db
 
 
 class Admin(User):
@@ -12,7 +12,7 @@ class Admin(User):
         :return: nothing
         """
         print(
-            'Please Select an option from the following menu:\n1.Define a course\n2.Show students\n3.Choose student\n4.Check student courses(Pass or Reject)\n5.logout')
+            '\nPlease Select an option from the following menu:\n1.Define a course\n2.Show students\n3.Choose student\n4.logout\n')
 
     @staticmethod
     def define_course(name, units, total_quantity, teacher_name, course_code, field_code):

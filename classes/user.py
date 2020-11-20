@@ -1,8 +1,4 @@
-import logging
 from hashlib import sha256
-
-logging.basicConfig(filename='take_course.log', level=logging.DEBUG, datefmt='%d/%m/%Y %I:%M:%S',
-                    format=' %(asctime)s - %(message)s ', filemode='a')
 
 
 class User:
@@ -35,12 +31,8 @@ class User:
         :param pass_input: a password
         :return: login status
         """
-        if self.username == sha256(user_input.encode()).hexdigest() and \
-                self.password == sha256(pass_input.encode()).hexdigest():
+        if self.username == user_input and self.password == sha256(pass_input.encode()).hexdigest():
             self.login_status = True
-            logging.info('Successful login')
-        else:
-            logging.warning('Unsuccessful login')
 
         return self.login_status
 
@@ -49,7 +41,7 @@ class User:
         by calling this method login status will change to False(The user exits the messenger)
         :return: login status
         """
-        self.login_status = "False"
+        self.login_status = False
         return self.login_status
 
     @staticmethod
@@ -58,16 +50,14 @@ class User:
         show menu to user
         :return: nothing
         """
-        print('     welcome to University Automation\n')
-        print('Please Select an option from the following menu:\n')
-        print('1.login\n2.logout')
+        print('\n     welcome to University Automation')
 
     def is_admin(self):
         """
         check that user is admin or not.
         :return: True/False
         """
-        if self.user_type == '1':
+        if self.user_type == 1:
             return True
         else:
             return False
