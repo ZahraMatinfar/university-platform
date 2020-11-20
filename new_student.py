@@ -125,9 +125,6 @@ class Student(User):
         """
 
         if self.check_units() != -1 and self.check_units() != 1:
-            # def write_json(data, filename='students_info.json'):
-            #     with open(filename, 'w') as f:
-            #         json.dump(data, f, indent=2)
 
             with open('students_info.json', 'w') as std_info:
                 for course in self.chosen_courses:
@@ -137,16 +134,6 @@ class Student(User):
                 json_data = json.dumps(self.student_submit_info)
                 std_info.write(json_data)
 
-            # with open('students_info.csv', 'a', newline='') as csv_file:
-            #     write_student_info = csv.DictWriter(csv_file, fieldnames='student_id')
-            #     write_student_info.writeheader()
-            #     field_names = ['name', 'course_code']
-            #     write_course_info = csv.DictWriter(csv_file, fieldnames=field_names)
-            #     write_course_info.writeheader()
-            #     write_student_info.writerow(
-            #         {f'self.student_id': write_course_info.writerow(
-            #             {'name': course.name, 'course_code': course.course_code}) for
-            #             course in self.chosen_courses})
             return True
         else:
             return False
