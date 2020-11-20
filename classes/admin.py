@@ -54,8 +54,8 @@ class Admin(User):
         :param status: admin status for pass(True) or reject(False)
         :return: nothing
         """
-        if student.submit():  # if student submit courses
-            if not status:
+        if student.submit():  # if student submitted her courses
+            if not status: # if number of student units are not acceptable
                 student.take_courses_status = False
                 logging.error("Courses Rejected")
             else:

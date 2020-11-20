@@ -4,26 +4,40 @@ logging.basicConfig(filename="../msg.log", filemode='a', level=logging.DEBUG, fo
 
 
 def student_login(student):
+    """
+    call Student class methods depending on witch option selected by student in menu
+    menu: 1.Offered courses in current semester.2.Take course.3.Drop course4.Student courses.5.Submit courses.6.Logout
+    :param student:
+    :return: True if student choose an option from menu and False if she logout
+    """
+    # print menu for student
     student.menu_message()
-    student.defined_available_courses()
     try:
         choice = int(input('your choice:'))
-
-        # menu: 1.Offered courses in current semester.2.Take course.3.Drop course4.Student courses.5.Submit courses.6.logout
-
         if choice == 1:
+            # show available courses that defined for student field
+            student.defined_available_courses()
             student.show_available_courses()
 
         elif choice == 2:
-            take = student.add_course(course_code=int(input('course code:')))
-            if take is None:
-                print('course quantity is complete.')
-                logging.warning('Try take full course.')
-            elif take:
-                student.show_chosen_courses()
-                logging.info('Student added a new course')
+            available_courses = student.defined_available_courses()
+            if len(available_courses) == 0:
+                print('No courses have been defined for you yet')
+                logging.warning('Try take course before courses defined')
+
             else:
-                print('This course already has been chosen by you .')
+                take = student.add_course(course_code=int(input('course code:')))
+                # if quantity of course is complete,take returned False
+                if not take:
+                    print('course quantity is complete.')
+                    logging.warning('Try take full course.')
+                # if course didnt choose already by student and have enough quantity,take is True
+                elif take:
+                    student.show_chosen_courses()
+                    logging.info('Student added a new course')
+                # if take is None:
+                else:
+                    print('This course already has been chosen by you .')
 
         elif choice == 3:
             student.show_chosen_courses()
@@ -32,6 +46,7 @@ def student_login(student):
                 logging.info('Student dropped a course')
             else:
                 print('Code is not valid.')
+                logging.warning('invalid course code for dropping')
 
         elif choice == 4:
             student.show_chosen_courses()
@@ -43,16 +58,18 @@ def student_login(student):
                 student.show_submitted_courses()
             else:
                 print('You can\'t submit.Your unit number is low or too much. ')
+                logging.warning('Student unsuccessful submission')
 
         elif choice == 6:
             student.logout()
             print('logout successfully\n')
-            logging.info('Student logout')
+            logging.info('Student logged out')
             return False
         else:
-            print('The number of your choice is not in menu')
+            print('Unavailable option,choose another number!')
+
     except ValueError:
         print('invalid input,choose a number .\n')
-        logging.warning('invalid input in student login')
+        logging.warning('invalid input in student menu')
 
     return True

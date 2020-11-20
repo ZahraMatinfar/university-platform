@@ -1,8 +1,8 @@
 import csv
 
 from classes.course import Course
-from databases.course.read_courses import read_db
 from classes.user import User
+from databases.course.read_courses import read_db
 
 
 class Student(User):
@@ -32,7 +32,7 @@ class Student(User):
         """
         print('\nPlease Select an option from the following menu:\n')
         print(
-            '1.Offered courses in current semester\n2.Take course\n3.Drop course\n4.Student courses\n5.Submit courses\n6.logout\n')
+            '1.Offered courses in current semester\n2.Take course\n3.Drop course\n4.Student courses\n5.Submit courses\n6.Logout\n')
 
     def check_units(self):
         """
@@ -74,9 +74,7 @@ class Student(User):
         :param course_code:
         :return: True if course have enough quantity,else:False.None If course is chosen already.
         """
-        # if len(self.available_courses) == 0:
-        #     print('no course is available,yet')
-        # else:
+
         for course in self.available_courses:
 
             # self.available_courses contains list of Course objects
@@ -84,25 +82,21 @@ class Student(User):
                 # check that course has enough quantity
                 if course.check_quantity:
                     if course in self.chosen_courses:
-                        return False
+                        return None
                     else:
                         course.remaining_quantity -= 1
                         self.total_units += course.units
-
                         self.chosen_courses.append(course)
                         return True
                 else:
-                    return None
+                    return False
 
     def drop_course(self, course_code):
         """
         delete specified course in student chosen_courses list when 'Drop course' option selected from menu
-        :param course_code:
-        :return: True if course drop .False if course can't drop
+        :param course_code
+        :return: True if course dropped .False if course didnt choose already
         """
-        # if len(self.available_courses) == 0:
-        #     print('you can\'t do this .no course is available,yet.')
-        # else:
         for course in self.chosen_courses:
             if course_code == course.course_code:
                 course.remaining_quantity += 1
@@ -142,7 +136,7 @@ class Student(User):
     def show_submitted_courses(self):
         """
         after submit courses show final chosen courses depending on that admin approve or reject them
-        :return:
+        :return:nothing
         """
         if self.take_courses_status:
             self.show_chosen_courses()
