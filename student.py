@@ -1,8 +1,9 @@
 import csv
 
-from course import Course
-from dtabases.courses.read_corses import read_db
-from user import User
+from classes.course import Course
+from classes.user import User
+from databases.course.read_courses import read_db
+from prettytable import PrettyTable
 
 
 class Student(User):
@@ -16,10 +17,11 @@ class Student(User):
 
     # overload str method for print student information
     def __str__(self):
-        return super().__str__()+ str(self.total_units)
+        return super().__str__() + f'  total units:{self.total_units}'
 
     def __iadd__(self, other):
-        self.total_units +=other
+        self.total_units += other
+
     def __isub__(self, other):
         self.total_units -= other
 
@@ -29,9 +31,9 @@ class Student(User):
         show menu to user
         :return: nothing
         """
-        print('Please Select an option from the following menu:\n')
+        print('\nPlease Select an option from the following menu:\n')
         print(
-            '1.Offered courses in current semester\n2.Take course\n3.Drop course\n4.Student courses\n5.Submit courses\n')
+            '1.Offered courses in current semester\n2.Take course\n3.Drop course\n4.Student courses\n5.Submit courses\n6.Logout\n')
 
     def check_units(self):
         """
@@ -52,49 +54,63 @@ class Student(User):
         """
 
         courses_list = read_db()
-        self.available_courses = []
         for course in courses_list:
-            if self.field_code == course['field_code'] or course['field_code'] == 0:
+            if self.field_code == int(course['field_code']) or int(course['field_code']) == 0:
                 self.available_courses.append(
-                    Course(course['name'], course['units'], course['total_quantity'], course['teacher_name'],
-                           course['course_code'], course['field_code']))
+                    Course(course['name'], int(course['units']), int(course['total_quantity']), course['teacher_name'],
+                           int(course['course_code']), int(course['field_code'])))
         return self.available_courses
 
-    # print available courses for student when 'Offered courses in current semester' option  in menu selected
     def show_available_courses(self):
+        """
+        print available courses for student when 'Offered courses in current semester' option  in menu selected
+        :return:nothing
+        """
+        t = PrettyTable(['course_code', 'name', 'units', 'total_quantity', 'teacher_name', 'field_code'])
+        t.clear()
         for course in self.available_courses:
-            print(course)
+            t.add_row([course.course_code, course.name, course.units, course.total_quantity, course.teacher_name,
+                       course.field_code])
+        print(t)
+        # print(t.get_string(start=0, end=len(self.available_courses)+1))
 
     def add_course(self, course_code):
         """
         add specified course in student chosen_courses list when 'Take course' option selected from menu
         :param course_code:
-        :return: True if course have enough quantity,else:False
+        :return: True if course have enough quantity,else:False.None If course is chosen already.
         """
+
         for course in self.available_courses:
+
             # self.available_courses contains list of Course objects
             if course_code == course.course_code:
                 # check that course has enough quantity
                 if course.check_quantity:
-                    course.remaining_quantity -= 1
-                    self.total_units += course.units
-
-                    self.chosen_courses.append(course)
-                    return True
+                    if course in self.chosen_courses:
+                        return None
+                    else:
+                        course.remaining_quantity -= 1
+                        self.total_units += course.units
+                        self.chosen_courses.append(course)
+                        return True
                 else:
                     return False
 
     def drop_course(self, course_code):
         """
         delete specified course in student chosen_courses list when 'Drop course' option selected from menu
-        :param course_code:
-        :return: nothing
+        :param course_code
+        :return: True if course dropped .False if course didnt choose already
         """
-        for course in self.available_courses:
+        for course in self.chosen_courses:
             if course_code == course.course_code:
                 course.remaining_quantity += 1
                 self.total_units -= course.units
                 self.chosen_courses.remove(course)
+                return True
+            else:
+                return False
 
     def show_chosen_courses(self):
         # print student chosen courses
@@ -110,14 +126,15 @@ class Student(User):
 
         if self.check_units() != -1 and self.check_units() != 1:
             with open('students_info.csv', 'a', newline='') as csv_file:
-                w1 = csv.DictWriter(csv_file, fieldnames='student_id')
-                w1.writeheader()
+                write_student_info = csv.DictWriter(csv_file, fieldnames='student_id')
+                write_student_info.writeheader()
                 field_names = ['name', 'course_code']
-                w2 = csv.DictWriter(csv_file, fieldnames=field_names)
-                w2.writeheader()
-                w1.writerow(
-                    {f'self.student_id': w2.writerow({'name': course.name, 'course_code': course.course_code}) for
-                     course in self.chosen_courses})
+                write_course_info = csv.DictWriter(csv_file, fieldnames=field_names)
+                write_course_info.writeheader()
+                write_student_info.writerow(
+                    {f'self.student_id': write_course_info.writerow(
+                        {'name': course.name, 'course_code': course.course_code}) for
+                        course in self.chosen_courses})
             return True
         else:
             return False
@@ -125,7 +142,7 @@ class Student(User):
     def show_submitted_courses(self):
         """
         after submit courses show final chosen courses depending on that admin approve or reject them
-        :return:
+        :return:nothing
         """
         if self.take_courses_status:
             self.show_chosen_courses()

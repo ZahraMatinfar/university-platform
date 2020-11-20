@@ -1,6 +1,9 @@
 import logging
-from user import User
-import dtabases.courses.read_corses as db
+
+from prettytable import PrettyTable
+
+from classes.user import User
+import databases.course.read_courses as db
 
 
 class Admin(User):
@@ -12,7 +15,7 @@ class Admin(User):
         :return: nothing
         """
         print(
-            'Please Select an option from the following menu:\n1.Define a course\n2.Show students\n3.Choose student\n4.Check student courses(Pass or Reject)\n5.logout')
+            '\nPlease Select an option from the following menu:\n1.Define a course\n2.Show students\n3.Choose student\n4.logout\n')
 
     @staticmethod
     def define_course(name, units, total_quantity, teacher_name, course_code, field_code):
@@ -29,9 +32,12 @@ class Admin(User):
         :param students_list: list of Student in same field with admin
         :return: nothing
         """
+        t = PrettyTable(['id', 'first name', 'last name', 'field name', 'field code'])
         for student in students_list:
             if student.field_code == self.field_code:
-                print(student)
+                t.add_row(
+                    [student.user_id, student.first_name, student.last_name, student.field_name, student.field_code])
+        print(t)
 
     @staticmethod
     def choose_student(user_id, student):
@@ -54,8 +60,8 @@ class Admin(User):
         :param status: admin status for pass(True) or reject(False)
         :return: nothing
         """
-        if student.submit():  # if student submit courses
-            if not status:
+        if student.submit():  # if student submitted her courses
+            if not status:  # if number of student units are not acceptable
                 student.take_courses_status = False
                 logging.error("Courses Rejected")
             else:
