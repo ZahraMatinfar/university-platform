@@ -29,7 +29,7 @@ def student_login(student):
 
 
         elif choice == 2:
-            if len(student.available_courses) == 0:
+            if len(student.defined_available_courses()) == 0:
                 print('No courses have been defined for you yet')
                 logging.warning('Try take course before courses defined')
 
@@ -69,7 +69,10 @@ def student_login(student):
                     logging.warning('invalid course code for dropping')
 
         elif choice == 4:
-            student.show_chosen_courses()
+            if student.submit():
+                student.show_submitted_courses()
+            else:
+                student.show_chosen_courses()
         elif choice == 5:
             if student.submit():
                 print('submission is successfully.')

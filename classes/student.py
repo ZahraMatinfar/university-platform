@@ -1,4 +1,5 @@
 import csv
+import json
 
 from classes.course import Course
 from classes.user import User
@@ -136,16 +137,12 @@ class Student(User):
         """
 
         if self.check_units() != -1 and self.check_units() != 1:
-            with open('students_info.csv', 'a', newline='') as csv_file:
-                write_student_info = csv.DictWriter(csv_file, fieldnames='student_id ')
-                write_student_info.writeheader()
-                field_names = ['name', 'course_code']
-                write_course_info = csv.DictWriter(csv_file, fieldnames=field_names)
-                write_course_info.writeheader()
-                write_student_info.writerow(
-                    {f'{self.user_id}': write_course_info.writerow(
-                        {'name': course.name, 'course_code': course.course_code}) for
-                        course in self.chosen_courses})
+            with open('../databases/users_db/students_info.json') as std_info:
+                json_data = json.load(std_info)
+                student_dict = {f'{self.user_id}': [vars(course) for course in self.chosen_courses]}
+            json_data.update(student_dict)
+            with open('../databases/users_db/students_info.json', 'w') as std_info:
+                json.dump(json_data, std_info)
             return True
         else:
             return False
@@ -155,8 +152,12 @@ class Student(User):
         after submit courses show final chosen courses depending on that admin approve or reject them
         :return:nothing
         """
-        submitted_course = []
+
         if self.take_courses_status:
-            self.show_chosen_courses()
+            with open('../databases/users_db/students_info.json') as std_info:
+                info = json.load(std_info)
+                for course in info[f'{self.user_id}']:
+                    for key, value in course.items():
+                        print(key, ':', value)
         else:
             print('your request has been rejected')

@@ -150,3 +150,21 @@ ValueError: invalid literal for int() with base 10: ''
 2020-11-21 21:42:10,708 - Wrong username or password
 2020-11-21 21:42:23,683 - Successful login
 2020-11-21 21:43:44,832 - Student logged out
+2020-11-22 02:12:02,587 - Successful login
+2020-11-22 02:14:11,203 - Successful login
+2020-11-22 02:14:19,282 - Student added a new course
+2020-11-22 02:14:54,147 - Successful login
+2020-11-22 02:15:06,851 - Student added a new course
+2020-11-22 02:15:15,478 - Student added a new course
+2020-11-22 02:15:20,799 - Unsuccessful student  submission
+2020-11-22 02:16:07,735 - Successful login
+2020-11-22 02:16:25,903 - Student added a new course
+2020-11-22 02:16:32,246 - Student submitted courses
+2020-11-22 02:17:49,923 - Successful login
+2020-11-22 02:17:59,977 - Student added a new course
+2020-11-22 02:18:10,815 - Student submitted courses
+2020-11-22 02:18:59,322 - Successful login
+2020-11-22 02:19:09,853 - Student added a new course
+2020-11-22 02:19:12,110 - Student submitted courses
+2020-11-22 02:20:00,332 - Student logged out
+2020-11-22 02:20:19,169 - Successful login
