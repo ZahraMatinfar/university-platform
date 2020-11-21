@@ -17,12 +17,12 @@ def student_login(student):
     try:
         choice = int(input('your choice:'))
     except ValueError:
-        print('invalid input,choose a number . \n')
+        print('invalid input,enter a number . \n')
         logging.exception('invalid input in student menu')
     else:
         if choice == 1:
             # show available courses that defined for student field
-            if len(student.available_courses) == 0:
+            if len(student.defined_available_courses()) == 0:
                 print('No courses have been defined for you yet')
             else:
                 student.show_available_courses()
@@ -86,4 +86,5 @@ def student_login(student):
             return False
         else:
             print('Unavailable option,choose another number!')
+
     return True

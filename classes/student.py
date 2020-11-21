@@ -11,7 +11,6 @@ class Student(User):
     def __init__(self, username, password, user_id, first_name, last_name, user_type, field_name, field_code):
         self.take_courses_status = True
         self.total_units = 0
-        self.available_courses = []
         self.chosen_courses = []
         super().__init__(username, password, user_id, first_name, last_name, user_type, field_name, field_code)
 
@@ -53,14 +52,14 @@ class Student(User):
         :return: nothing
         """
 
+        available_courses = []
         courses_list = read_db()
         for course in courses_list:
             if self.field_code == int(course['field_code']) or int(course['field_code']) == 0:
-                self.available_courses.append(
+                available_courses.append(
                     Course(course['name'], int(course['units']), int(course['total_quantity']), course['teacher_name'],
                            int(course['course_code']), int(course['field_code'])))
-
-
+        return available_courses
 
     def show_available_courses(self):
         """
@@ -71,7 +70,7 @@ class Student(User):
         table = PrettyTable(
             ['course code', 'course name', 'units', 'teacher name', 'field code', 'total quantity'])
 
-        for lesson in self.available_courses:
+        for lesson in self.defined_available_courses():
             table.add_row(
                 [lesson.course_code, lesson.name, lesson.units, lesson.teacher_name, lesson.field_code,
                  lesson.total_quantity])
@@ -84,7 +83,7 @@ class Student(User):
         :return: True if course have enough quantity,else:False.None If course is chosen already.
         """
 
-        for course in self.available_courses:
+        for course in self.defined_available_courses():
 
             # self.available_courses contains list of Course objects
             if course_code == course.course_code:
@@ -156,12 +155,8 @@ class Student(User):
         after submit courses show final chosen courses depending on that admin approve or reject them
         :return:nothing
         """
-        submited_course=[]
+        submitted_course = []
         if self.take_courses_status:
             self.show_chosen_courses()
         else:
             print('your request has been rejected')
-
-
-
-

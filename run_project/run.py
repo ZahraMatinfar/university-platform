@@ -8,11 +8,13 @@ logging.basicConfig(filename="../msg.log", filemode='a', level=logging.DEBUG, fo
 
 def user_login(username, password):
     for user in users_list:
-        if user.login(username, password):
-            user.menu_message()
-            successful_login(user)
-            logging.info('Successful login')
-            break
+
+        if user.username==username:
+            if user.login(username, password) :
+                user.menu_message()
+                logging.info('Successful login')
+                successful_login(user)
+                break
     else:
         print('\nwrong username or password\n')
         logging.warning('Wrong username or password')
@@ -20,6 +22,7 @@ def user_login(username, password):
 
 
 def successful_login(user):
+
     if user.is_admin():
         for admin in admins_list:
             if admin.user_id == user.user_id:
@@ -28,7 +31,7 @@ def successful_login(user):
                     admin_login(admin)
                 else:
                     main()
-                break
+            # break
     else:
         for student in students_list:
             if student.user_id == user.user_id:
@@ -36,7 +39,7 @@ def successful_login(user):
                     student_login(student)
                 else:
                     main()
-                break
+            # break
 
 
 def main():

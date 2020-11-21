@@ -33,7 +33,6 @@ class User:
         """
         if self.username == user_input and self.password == sha256(pass_input.encode()).hexdigest():
             self.login_status = True
-
         return self.login_status
 
     def logout(self):
