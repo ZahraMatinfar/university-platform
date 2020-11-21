@@ -1,1 +1,0 @@
-# university-platform
