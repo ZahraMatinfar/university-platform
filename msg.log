@@ -150,3 +150,7 @@ ValueError: invalid literal for int() with base 10: ''
 2020-11-21 21:42:10,708 - Wrong username or password
 2020-11-21 21:42:23,683 - Successful login
 2020-11-21 21:43:44,832 - Student logged out
+2020-11-22 17:01:42,720 - Successful login
+2020-11-22 17:01:49,649 - Student logged out
+2020-11-22 17:02:02,101 - Successful login
+2020-11-22 17:05:47,246 - Successful login

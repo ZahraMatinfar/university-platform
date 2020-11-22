@@ -42,16 +42,19 @@ def student_login(student):
                 else:
                     take = student.add_course(course_code)
                     # if quantity of course is complete,take returned False
-                    if not take:
-                        print('course capacity is complete.')
-                        logging.warning('Try take full course.')
+                    if take == 0:
+                        print('This course already has been chosen by you .')
                     # if course didnt choose already by student and have enough quantity,take is True
-                    elif take:
+                    elif take == 1:
                         student.show_chosen_courses()
                         logging.info('Student added a new course')
                     # if take is None:
+                    elif take == -1:
+                        print('course capacity is complete.')
+                        logging.warning('Try take full course.')
                     else:
-                        print('This course already has been chosen by you .')
+                        print('This code is invalid.')
+
 
         elif choice == 3:
             student.show_chosen_courses()

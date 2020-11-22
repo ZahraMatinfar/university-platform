@@ -1,4 +1,4 @@
-import csv
+import json
 
 from classes.course import Course
 from classes.user import User
@@ -12,6 +12,8 @@ class Student(User):
         self.take_courses_status = True
         self.total_units = 0
         self.chosen_courses = []
+        self.submitted_courses = []
+        self.student_submit_info = {}
         super().__init__(username, password, user_id, first_name, last_name, user_type, field_name, field_code)
 
     # overload str method for print student information
@@ -80,7 +82,7 @@ class Student(User):
         """
         add specified course in student chosen_courses list when 'Take course' option selected from menu
         :param course_code:
-        :return: True if course have enough quantity,else:False.None If course is chosen already.
+        :return: 1 if course have enough quantity,else:-1.0 If course is chosen already.False is course code is wrong.
         """
 
         for course in self.defined_available_courses():
@@ -90,14 +92,16 @@ class Student(User):
                 # check that course has enough quantity
                 if course.check_quantity:
                     if course in self.chosen_courses:
-                        return None
+                        return 0
                     else:
                         course.remaining_quantity -= 1
                         self.total_units += course.units
                         self.chosen_courses.append(course)
-                        return True
+                        return 1
                 else:
-                    return False
+                    return -1
+            else:
+                return False
 
     def drop_course(self, course_code):
         """
@@ -136,16 +140,15 @@ class Student(User):
         """
 
         if self.check_units() != -1 and self.check_units() != 1:
-            with open('students_info.csv', 'a', newline='') as csv_file:
-                write_student_info = csv.DictWriter(csv_file, fieldnames='student_id ')
-                write_student_info.writeheader()
-                field_names = ['name', 'course_code']
-                write_course_info = csv.DictWriter(csv_file, fieldnames=field_names)
-                write_course_info.writeheader()
-                write_student_info.writerow(
-                    {f'{self.user_id}': write_course_info.writerow(
-                        {'name': course.name, 'course_code': course.course_code}) for
-                        course in self.chosen_courses})
+
+            with open('students_info.json', 'w') as std_info:
+                for course in self.chosen_courses:
+                    course_info = {'name': '{}'.format(course.name), 'course_code': '{}'.format(course.course_code)}
+                    self.submitted_courses.append(course_info)
+                self.student_submit_info['{}'.format(self.user_id)] = self.submitted_courses
+                json_data = json.dumps(self.student_submit_info)
+                std_info.write(json_data)
+
             return True
         else:
             return False
@@ -157,6 +160,16 @@ class Student(User):
         """
         submitted_course = []
         if self.take_courses_status:
-            self.show_chosen_courses()
+            with open('../databases/users_db/students_info.json') as std_info:
+                info = json.load(std_info)
+                table = PrettyTable(
+                    ['course code', 'course name', 'units', 'teacher name', 'field code', 'total quantity'])
+                for course in info[f'{self.user_id}']:
+                    values = []
+                    for i in ['course_code', 'name', 'units', 'teacher_name', 'field_code', 'total_quantity']:
+                        values.append(course[i])
+                    table.add_row(values)
+                print(table)
         else:
             print('your request has been rejected')
+

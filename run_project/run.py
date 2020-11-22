@@ -9,8 +9,8 @@ logging.basicConfig(filename="../msg.log", filemode='a', level=logging.DEBUG, fo
 def user_login(username, password):
     for user in users_list:
 
-        if user.username==username:
-            if user.login(username, password) :
+        if user.username == username:
+            if user.login(username, password):
                 user.menu_message()
                 logging.info('Successful login')
                 successful_login(user)
@@ -22,24 +22,24 @@ def user_login(username, password):
 
 
 def successful_login(user):
-
     if user.is_admin():
         for admin in admins_list:
             if admin.user_id == user.user_id:
-
-                while admin_login(admin):
-                    admin_login(admin)
+                while_condition_admin = True
+                while while_condition_admin:
+                    while_condition_admin = admin_login(admin)
                 else:
                     main()
-            # break
+                # break
     else:
         for student in students_list:
             if student.user_id == user.user_id:
-                while student_login(student):
-                    student_login(student)
+                while_condition_student = True
+                while while_condition_student:
+                    while_condition_student = student_login(student)
                 else:
                     main()
-            # break
+                # break
 
 
 def main():
