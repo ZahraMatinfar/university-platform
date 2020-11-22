@@ -154,3 +154,80 @@ ValueError: invalid literal for int() with base 10: ''
 2020-11-22 17:01:49,649 - Student logged out
 2020-11-22 17:02:02,101 - Successful login
 2020-11-22 17:05:47,246 - Successful login
+2020-11-22 20:36:25,842 - Wrong username or password
+2020-11-22 20:36:38,858 - Successful login
+2020-11-22 20:37:57,697 - Successful login
+2020-11-22 20:38:17,439 - Student added a new course
+2020-11-22 20:43:15,590 - Successful login
+2020-11-22 20:43:22,624 - Student added a new course
+2020-11-22 20:45:41,324 - Successful login
+2020-11-22 20:45:44,870 - Student added a new course
+2020-11-22 20:47:56,992 - Successful login
+2020-11-22 20:48:01,794 - Student added a new course
+2020-11-22 20:49:45,577 - Successful login
+2020-11-22 20:49:52,699 - Student added a new course
+2020-11-22 20:51:01,874 - Successful login
+2020-11-22 20:51:08,099 - Student added a new course
+2020-11-22 20:53:06,522 - Successful login
+2020-11-22 20:53:09,904 - Student added a new course
+2020-11-22 20:53:46,792 - Wrong username or password
+2020-11-22 20:53:57,551 - Successful login
+2020-11-22 20:54:03,752 - Student added a new course
+2020-11-22 20:56:57,699 - Successful login
+2020-11-22 20:58:14,077 - Successful login
+2020-11-22 20:58:39,581 - Successful login
+2020-11-22 20:58:43,227 - Student added a new course
+2020-11-22 20:58:46,361 - Student added a new course
+2020-11-22 20:58:53,149 - invalid course code for dropping
+2020-11-22 20:59:08,675 - Student added a new course
+2020-11-22 20:59:13,411 - Student added a new course
+2020-11-22 20:59:43,737 - Student added a new course
+2020-11-22 20:59:48,902 - Student added a new course
+2020-11-22 20:59:59,390 - Student submitted courses
+2020-11-22 21:00:43,429 - Successful login
+2020-11-22 21:00:45,935 - Student added a new course
+2020-11-22 21:00:50,161 - Student added a new course
+2020-11-22 21:00:53,564 - Student added a new course
+2020-11-22 21:00:58,086 - Student added a new course
+2020-11-22 21:01:15,201 - Student added a new course
+2020-11-22 21:01:30,319 - Student submitted courses
+2020-11-22 21:03:52,856 - Successful login
+2020-11-22 21:03:55,661 - Student added a new course
+2020-11-22 21:03:59,829 - Student added a new course
+2020-11-22 21:04:03,127 - Student added a new course
+2020-11-22 21:04:05,907 - Student added a new course
+2020-11-22 21:04:22,642 - Student added a new course
+2020-11-22 21:04:26,311 - Student submitted courses
+2020-11-22 21:05:57,509 - Successful login
+2020-11-22 21:06:10,219 - New course defined!
+2020-11-22 21:08:55,250 - Successful login
+2020-11-22 21:14:29,005 - Wrong username or password
+2020-11-22 21:14:41,945 - Successful login
+2020-11-22 21:17:22,825 - Successful login
+2020-11-22 21:18:36,331 - Successful login
+2020-11-22 21:18:47,345 - Courses not Submitted
+2020-11-22 21:19:15,616 - Courses not Submitted
+2020-11-22 21:24:08,555 - Wrong username or password
+2020-11-22 21:24:20,827 - Successful login
+2020-11-22 21:34:38,114 - Successful login
+2020-11-22 21:34:46,344 - Unsuccessful student  submission
+2020-11-22 21:46:54,243 - Successful login
+2020-11-22 21:46:59,755 - Student added a new course
+2020-11-22 21:47:02,471 - Student added a new course
+2020-11-22 21:47:05,574 - Student added a new course
+2020-11-22 21:47:24,122 - Student added a new course
+2020-11-22 21:47:28,532 - Student added a new course
+2020-11-22 21:47:32,191 - Student submitted courses
+2020-11-22 21:52:31,264 - Successful login
+2020-11-22 21:52:39,035 - invalid input for course code[Try take course]
+2020-11-22 21:52:46,668 - Unsuccessful student  submission
+2020-11-22 21:56:48,559 - Successful login
+2020-11-22 21:56:57,989 - Student added a new course
+2020-11-22 21:57:02,079 - Student added a new course
+2020-11-22 21:57:08,827 - Student dropped a course
+2020-11-22 21:59:23,522 - Successful login
+2020-11-22 21:59:27,979 - Student logged out
+2020-11-22 22:00:58,506 - Successful login
+2020-11-22 22:01:08,075 - Admin logout
+2020-11-22 22:01:17,311 - Successful login
+2020-11-22 22:01:20,016 - Student logged out

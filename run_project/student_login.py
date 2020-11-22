@@ -1,5 +1,4 @@
 import logging
-import os
 
 logging.basicConfig(filename="../msg.log", filemode='a', level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
@@ -18,7 +17,7 @@ def student_login(student):
         choice = int(input('your choice:'))
     except ValueError:
         print('invalid input,enter a number . \n')
-        logging.exception('invalid input in student menu')
+        logging.warning('invalid input in student menu')
     else:
         if choice == 1:
             # show available courses that defined for student field
@@ -29,7 +28,7 @@ def student_login(student):
 
 
         elif choice == 2:
-            if len(student.available_courses) == 0:
+            if len(student.defined_available_courses()) == 0:
                 print('No courses have been defined for you yet')
                 logging.warning('Try take course before courses defined')
 
@@ -52,7 +51,7 @@ def student_login(student):
                     elif take == -1:
                         print('course capacity is complete.')
                         logging.warning('Try take full course.')
-                    else:
+                    elif take == 2:
                         print('This code is invalid.')
 
 
@@ -62,7 +61,7 @@ def student_login(student):
                 course_code = int(input('course code:'))
             except ValueError:
                 print('invalid input,Enter a number .\n')
-                logging.exception('invalid input for course code[Try drop course]')
+                logging.warning('invalid input for course code[Try drop course]')
             else:
                 if student.drop_course(course_code):
                     print('Course dropped successfully.')

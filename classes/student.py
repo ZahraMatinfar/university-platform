@@ -90,7 +90,7 @@ class Student(User):
             # self.available_courses contains list of Course objects
             if course_code == course.course_code:
                 # check that course has enough quantity
-                if course.check_quantity:
+                if course.check_quantity():
                     if course in self.chosen_courses:
                         return 0
                     else:
@@ -100,8 +100,8 @@ class Student(User):
                         return 1
                 else:
                     return -1
-            else:
-                return False
+        else:
+            return 2
 
     def drop_course(self, course_code):
         """
@@ -141,7 +141,7 @@ class Student(User):
 
         if self.check_units() != -1 and self.check_units() != 1:
 
-            with open('students_info.json', 'w') as std_info:
+            with open('../databases/users_db/students_info.json', 'w') as std_info:
                 for course in self.chosen_courses:
                     course_info = {'name': '{}'.format(course.name), 'course_code': '{}'.format(course.course_code)}
                     self.submitted_courses.append(course_info)
@@ -160,7 +160,7 @@ class Student(User):
         """
         submitted_course = []
         if self.take_courses_status:
-            with open('../databases/users_db/students_info.json') as std_info:
+            with open('students_info.json') as std_info:
                 info = json.load(std_info)
                 table = PrettyTable(
                     ['course code', 'course name', 'units', 'teacher name', 'field code', 'total quantity'])
