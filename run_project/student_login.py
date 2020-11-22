@@ -1,5 +1,4 @@
 import logging
-import os
 
 logging.basicConfig(filename="../msg.log", filemode='a', level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
@@ -40,18 +39,25 @@ def student_login(student):
                     print('invalid input,Enter a number .\n')
                     logging.warning('invalid input for course code[Try take course]')
                 else:
-                    take = student.add_course(course_code)
-                    # if quantity of course is complete,take returned False
-                    if not take:
-                        print('course capacity is complete.')
-                        logging.warning('Try take full course.')
-                    # if course didnt choose already by student and have enough quantity,take is True
-                    elif take:
-                        student.show_chosen_courses()
-                        logging.info('Student added a new course')
-                    # if take is None:
+                    if ((student.submit() == False) and (student.take_courses_status == True)) or (
+                            student.submit() and (student.take_courses_status == False)):
+                        take = student.add_course(course_code)
+                        # if quantity of course is complete,take returned -1
+                        if take == -1:
+                            print('course capacity is complete.')
+                            logging.warning('Try take full course.')
+                        # if course didnt choose already by student and have enough quantity,take is 1
+                        elif take == 1:
+                            student.show_chosen_courses()
+                            logging.info('Student added a new course')
+                        # if student has already chosen the course
+                        elif take == 0:
+                            print('This course already has been chosen by you .')
+                        elif take == 2:
+                            print('Course unavailable or not defined for you!')
                     else:
-                        print('This course already has been chosen by you .')
+                        print('You can not take courses at this time')
+
 
         elif choice == 3:
             student.show_chosen_courses()
@@ -61,16 +67,23 @@ def student_login(student):
                 print('invalid input,Enter a number .\n')
                 logging.exception('invalid input for course code[Try drop course]')
             else:
-                if student.drop_course(course_code):
-                    print('Course dropped successfully.')
-                    logging.info('Student dropped a course')
+                if ((not student.check_submission()) and (student.take_courses_status == True)) or (
+                        student.check_submission() and (student.take_courses_status == False)):
+                    if student.drop_course(course_code):
+                        print('Course dropped successfully.')
+                        logging.info('Student dropped a course')
+                    else:
+                        print('Code is not valid.')
+                        logging.warning('invalid course code for dropping')
                 else:
-                    print('Code is not valid.')
-                    logging.warning('invalid course code for dropping')
+                    print('You can not drop courses at this time')
 
         elif choice == 4:
-            if student.submit():
-                student.show_submitted_courses()
+            if student.check_submission():
+                if student.take_courses_status:
+                    student.show_submitted_courses()
+                else:
+                    print('your request has been rejected')
             else:
                 student.show_chosen_courses()
         elif choice == 5:

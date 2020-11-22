@@ -1,7 +1,9 @@
 import logging
-from classes.user import User
-import databases.course.read_courses as db
+
 from prettytable import PrettyTable
+
+import databases.course.read_courses as db
+from classes.user import User
 
 
 class Admin(User):
@@ -47,14 +49,8 @@ class Admin(User):
         :return: nothing
         """
         # for user in students_list:
-
-        table = PrettyTable(
-            ['course code', 'course name', 'units', 'teacher name', 'field code'])
         if student.user_id == user_id:
-            for lesson in student.chosen_courses:
-                table.add_row(
-                    [lesson.course_code, lesson.name, lesson.units, lesson.teacher_name, lesson.field_code])
-            print(table)
+            student.show_submitted_courses()
 
     @staticmethod
     def check_student_course(student, status):

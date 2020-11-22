@@ -1,10 +1,10 @@
-import csv
 import json
+
+from prettytable import PrettyTable
 
 from classes.course import Course
 from classes.user import User
 from databases.course.read_courses import read_db
-from prettytable import PrettyTable
 
 
 class Student(User):
@@ -40,9 +40,9 @@ class Student(User):
         check number of student units
         :return: 0 for acceptable number/1 for more than allowed number/-1 for less than allowed number
         """
-        if self.total_units > 20:
+        if self.total_units > 6:
             return 1
-        elif self.total_units < 10:
+        elif self.total_units < 1:
             return -1
         else:
             return 0
@@ -91,14 +91,16 @@ class Student(User):
                 # check that course has enough quantity
                 if course.check_quantity:
                     if course in self.chosen_courses:
-                        return None
+                        return 0
                     else:
                         course.remaining_quantity -= 1
                         self.total_units += course.units
                         self.chosen_courses.append(course)
-                        return True
+                        return 1
                 else:
-                    return False
+                    return -1
+        else:
+            return 2
 
     def drop_course(self, course_code):
         """
@@ -147,17 +149,26 @@ class Student(User):
         else:
             return False
 
+    def check_submission(self):
+        with open('../databases/users_db/students_info.json') as std_info:
+            students = json.load(std_info)
+            if str(self.user_id) in students:
+                return True
+            else:
+                return False
+
     def show_submitted_courses(self):
         """
         after submit courses show final chosen courses depending on that admin approve or reject them
         :return:nothing
         """
-
-        if self.take_courses_status:
-            with open('../databases/users_db/students_info.json') as std_info:
-                info = json.load(std_info)
-                for course in info[f'{self.user_id}']:
-                    for key, value in course.items():
-                        print(key, ':', value)
-        else:
-            print('your request has been rejected')
+        with open('../databases/users_db/students_info.json') as std_info:
+            info = json.load(std_info)
+            table = PrettyTable(
+                ['course code', 'course name', 'units', 'teacher name', 'field code', 'total quantity'])
+            for course in info[f'{self.user_id}']:
+                values = []
+                for i in ['course_code', 'name', 'units', 'teacher_name', 'field_code', 'total_quantity']:
+                    values.append(course[i])
+                table.add_row(values)
+            print(table)

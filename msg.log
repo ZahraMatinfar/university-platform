@@ -168,3 +168,18 @@ ValueError: invalid literal for int() with base 10: ''
 2020-11-22 02:19:12,110 - Student submitted courses
 2020-11-22 02:20:00,332 - Student logged out
 2020-11-22 02:20:19,169 - Successful login
+2020-11-23 01:29:23,471 - INFO- Successful login
+2020-11-23 01:35:29,168 - INFO- Successful login
+2020-11-23 01:41:48,666 - INFO- Successful login
+2020-11-23 01:43:47,902 - INFO- Successful login
+2020-11-23 01:44:18,612 - INFO- Student logged out
+2020-11-23 01:45:59,064 - INFO- Successful login
+2020-11-23 01:46:02,140 - INFO- Student logged out
+2020-11-23 01:46:35,491 - INFO- Successful login
+2020-11-23 01:46:54,416 - INFO- Student added a new course
+2020-11-23 01:48:25,465 - INFO- Successful login
+2020-11-23 01:50:47,154 - INFO- Student logged out
+2020-11-23 01:52:06,781 - INFO- Successful login
+2020-11-23 01:54:59,689 - INFO- Student added a new course
+2020-11-23 01:56:31,923 - INFO- Student logged out
+2020-11-23 01:56:54,172 - INFO- Successful login
