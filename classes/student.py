@@ -10,15 +10,14 @@ from databases.course.read_courses import read_db
 class Student(User):
     """
     Student class is a child class of User class
-    ATTRIBUTES : username,password,user_id,first_name, last_name, user_type, field_name, field_code,take_courses_status,
-    total_units,chosen_courses
+    ATTRIBUTES : username,password,user_id,first_name, last_name, user_type,
+     field_name, field_code,total_units,chosen_courses
     METHODS : init,str,iadd,isub,menu_message,check_units,defined_available_courses,show_available_courses,add_course,
     drop_course,show_chosen_courses,submit,check_submission,show_submitted_courses
     """
 
     # initialize student attributes
     def __init__(self, username, password, user_id, first_name, last_name, user_type, field_name, field_code):
-        # self.take_courses_status = True
         self.total_units = 0
         self.chosen_courses = []
         super().__init__(username, password, user_id, first_name, last_name, user_type, field_name, field_code)
