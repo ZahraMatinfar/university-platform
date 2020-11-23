@@ -9,7 +9,6 @@ logging.basicConfig(filename='../msg.log', filemode='a', level=logging.DEBUG,
 
 def user_login(username, password):
     for user in users_list:
-
         if user.username == username:
             if user.login(username, password):
                 user.menu_message()
@@ -18,7 +17,7 @@ def user_login(username, password):
                 break
     else:
         print('\nwrong username or password\n')
-        logging.warning('Wrong username or password')
+        logging.error('Wrong username or password')
         main()
 
 
@@ -31,7 +30,7 @@ def successful_login(user):
                     while_condition_admin = admin_login(admin)
                 else:
                     main()
-                # break
+    # if user is student
     else:
         for student in students_list:
             if student.user_id == user.user_id:
@@ -40,7 +39,6 @@ def successful_login(user):
                     while_condition_student = student_login(student)
                 else:
                     main()
-                # break
 
 
 def main():
@@ -49,7 +47,7 @@ def main():
         choice = int(input('your choice:'))
     except ValueError:
         print('invalid input,choose a number in menu. \n')
-        logging.warning('invalid input in main function')
+        logging.exception('invalid input in main function')
         main()
     else:
         if choice == 1:
@@ -63,6 +61,7 @@ def main():
             exit()
         else:
             print('This number is not a number in menu.\n')
+            logging.warning('Unavailable option input in menu')
             main()
 
 

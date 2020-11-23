@@ -7,6 +7,11 @@ from classes.user import User
 
 
 class Admin(User):
+    """
+    a child class of User class thar play role of education administrator
+    ATTRIBUTES: attributes of User class
+    METHODS: menu_massage,define_course,show_students,choose_student,check_student_course
+    """
 
     @staticmethod
     def menu_message():
@@ -20,7 +25,7 @@ class Admin(User):
     @staticmethod
     def define_course(name, units, total_quantity, teacher_name, course_code, field_code):
         """
-        define a course with write function in
+        define a course with write_db function in read_courses module
         :return: nothing
         """
 
@@ -29,11 +34,11 @@ class Admin(User):
     def show_students(self, students_list):
         """
         Show students list whit specifications.
-        :param students_list: list of Student in same field with admin
+        :param students_list: list of Student with same field with admin creat in read_databases file
         :return: nothing
         """
         table = PrettyTable(
-            ['id', 'first name', 'last name', 'field name', 'field code'])  # create table of students with same field
+            ['id', 'first name', 'last name', 'field name', 'field code'])
         for student in students_list:
             if student.field_code == self.field_code:
                 table.add_row(
@@ -43,30 +48,32 @@ class Admin(User):
     @staticmethod
     def choose_student(user_id, student):
         """
-        Choose student with id and then show selected units and lessons
-        :param user_id: id for selected user that admin want to see lessons
+        Choose student by student id and show her courses information
+        :param user_id: user_id for student that admin want to see her courses
         :param student: Object of Student class
         :return: nothing
         """
-        # for user in students_list:
         if student.user_id == user_id:
-            student.show_submitted_courses()
-
+            if student.check_submission():
+                student.show_submitted_courses()
+                return True
+            else:
+                return False
     @staticmethod
     def check_student_course(student, status):
         """
-        Check student courses and pass or reject
+        Check student courses and approve or reject them
         :param student: object of Student class
-        :param status: admin status for pass(True) or reject(False)
+        :param status: admin status for approve(True) or reject(False)
         :return: nothing
         """
-        if student.submit():  # if student submitted her courses
-            if not status:  # if number of student units are not acceptable
+        if student.check_submission():  # if student submitted her courses
+            if not status:
                 student.take_courses_status = False
                 logging.error("Courses Rejected")
             else:
                 student.take_courses_status = True
-                logging.info("Courses Submitted")
-        else:  # if student didn't submit courses
-            student.take_courses_status = False
+                logging.info("Courses Approved")
+        else:  # if student didn't submit her courses
+            student.take_courses_status = True
             logging.error("Courses not Submitted")
