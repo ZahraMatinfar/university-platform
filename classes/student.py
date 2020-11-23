@@ -1,15 +1,23 @@
-import csv
+import json
+
+from prettytable import PrettyTable
 
 from classes.course import Course
 from classes.user import User
 from databases.course.read_courses import read_db
-from prettytable import PrettyTable
 
 
 class Student(User):
+    """
+    Student class is a child class of User class
+    ATTRIBUTES : username,password,user_id,first_name, last_name, user_type,
+     field_name, field_code,total_units,chosen_courses
+    METHODS : init,str,iadd,isub,menu_message,check_units,defined_available_courses,show_available_courses,add_course,
+    drop_course,show_chosen_courses,submit,check_submission,show_submitted_courses
+    """
+
     # initialize student attributes
     def __init__(self, username, password, user_id, first_name, last_name, user_type, field_name, field_code):
-        self.take_courses_status = True
         self.total_units = 0
         self.chosen_courses = []
         super().__init__(username, password, user_id, first_name, last_name, user_type, field_name, field_code)
@@ -27,7 +35,7 @@ class Student(User):
     @staticmethod
     def menu_message():
         """
-        show menu to user
+        show menu to student
         :return: nothing
         """
         print('\nPlease Select an option from the following menu:\n')
@@ -37,7 +45,7 @@ class Student(User):
     def check_units(self):
         """
         check number of student units
-        :return: 0 for acceptable number/1 for more than allowed number/-1 for less than allowed number
+        :return: 0 for acceptable number,1 for more than allowed number,-1 for less than allowed number
         """
         if self.total_units > 20:
             return 1
@@ -48,7 +56,7 @@ class Student(User):
 
     def defined_available_courses(self):
         """
-        select list of defined courses for student field from all courses
+        creat list of defined courses for student field from all courses
         :return: nothing
         """
 
@@ -80,24 +88,27 @@ class Student(User):
         """
         add specified course in student chosen_courses list when 'Take course' option selected from menu
         :param course_code:
-        :return: True if course have enough quantity,else:False.None If course is chosen already.
+        :return: True if course have enough quantity,else:False.None If course is chosen already,2 for not defined course for student
         """
-
         for course in self.defined_available_courses():
 
             # self.available_courses contains list of Course objects
             if course_code == course.course_code:
                 # check that course has enough quantity
                 if course.check_quantity:
-                    if course in self.chosen_courses:
-                        return None
+                    for lesson in self.chosen_courses:
+                        if lesson.course_code == course_code:
+                            return 0
                     else:
                         course.remaining_quantity -= 1
                         self.total_units += course.units
                         self.chosen_courses.append(course)
-                        return True
+                        return 1
                 else:
-                    return False
+                    return -1
+        # if course code not defined for student or unavailable
+        else:
+            return 2
 
     def drop_course(self, course_code):
         """
@@ -111,13 +122,14 @@ class Student(User):
                 self.total_units -= course.units
                 self.chosen_courses.remove(course)
                 return True
-            else:
-                return False
+        else:
+            return False
 
     def show_chosen_courses(self):
         """print student chosen courses"""
         if len(self.chosen_courses) == 0:
             print('No courses have been added yet.')
+
         else:
             table = PrettyTable(
                 ['course code', 'course name', 'units', 'teacher name', 'field code', 'total quantity'])
@@ -128,35 +140,79 @@ class Student(User):
                      lesson.total_quantity])
             print(table)
 
+
     def submit(self):
         """
         final step of take course is submit courses and save them in the file
-        so admin can check and approve or reject them
-        :return: True if number of units are between 10 and 20/else:False
+        so admin can check and approve or reject them.
+        :return: True if number of units are between 10 and 20,else:False
         """
 
         if self.check_units() != -1 and self.check_units() != 1:
-            with open('students_info.csv', 'a', newline='') as csv_file:
-                write_student_info = csv.DictWriter(csv_file, fieldnames='student_id ')
-                write_student_info.writeheader()
-                field_names = ['name', 'course_code']
-                write_course_info = csv.DictWriter(csv_file, fieldnames=field_names)
-                write_course_info.writeheader()
-                write_student_info.writerow(
-                    {f'{self.user_id}': write_course_info.writerow(
-                        {'name': course.name, 'course_code': course.course_code}) for
-                        course in self.chosen_courses})
+            with open('../databases/users_db/students_info.json') as std_info:
+                # json_data is dictionary of students id that they are submitted
+                json_data = json.load(std_info)
+                # vars() creat dictionary of object attributes ant their values
+                student_dict = {
+                    f'{self.user_id}': [{'courses_status': True}, [vars(course) for course in self.chosen_courses]]}
+            json_data.update(student_dict)
+            with open('../databases/users_db/students_info.json', 'w') as std_info:
+                json.dump(json_data, std_info)
             return True
         else:
             return False
 
+    def check_submission(self):
+        """
+        this method searches in students_info for check that student has been submitted or not
+        :return: True if student submitted and False if she/he didnt
+        """
+        with open('../databases/users_db/students_info.json') as std_info:
+            students = json.load(std_info)
+            if str(self.user_id) in students:
+                return True
+            else:
+                return False
+
     def show_submitted_courses(self):
         """
-        after submit courses show final chosen courses depending on that admin approve or reject them
+        a method for print submitted courses information
         :return:nothing
         """
-        submitted_course = []
-        if self.take_courses_status:
-            self.show_chosen_courses()
+        with open('../databases/users_db/students_info.json') as std_info:
+            units = 0
+            info = json.load(std_info)
+            table = PrettyTable(
+                ['course code', 'course name', 'units', 'teacher name', 'field code', 'total quantity'])
+            for course in info[f'{self.user_id}'][1]:
+                values = []
+                for i in ['course_code', 'name', 'units', 'teacher_name', 'field_code', 'total_quantity']:
+                    values.append(course[i])
+                table.add_row(values)
+                units += course['units']
+            print(f'TOTAL UNITS : {units}')
+            print(table)
+
+    def check_status(self):
+        """
+        if student submitted updete her/his status else return True.
+        """
+        if self.check_submission():
+            with open('../databases/users_db/students_info.json') as std_info:
+                info = json.load(std_info)
+                student_info = info[f'{self.user_id}']
+                courses_status = student_info[0]['courses_status']
+                return courses_status
         else:
-            print('your request has been rejected')
+            return True
+
+    def take_course_permission(self):
+        """
+        check that student can take course or not.
+        :return: True = can , False=can't
+        """
+        if ((self.check_submission() is False) and (self.check_status() is True)) or (
+                (self.check_submission() is True) and (self.check_status() is False)):
+            return True
+        else:
+            return False

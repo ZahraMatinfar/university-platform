@@ -1,10 +1,18 @@
+import json
 import logging
-from classes.user import User
-import databases.course.read_courses as db
+
 from prettytable import PrettyTable
+
+import databases.course.read_courses as db
+from classes.user import User
 
 
 class Admin(User):
+    """
+    a child class of User class thar play role of education administrator
+    ATTRIBUTES: attributes of User class
+    METHODS: menu_massage,define_course,show_students,choose_student,check_student_course
+    """
 
     @staticmethod
     def menu_message():
@@ -18,7 +26,7 @@ class Admin(User):
     @staticmethod
     def define_course(name, units, total_quantity, teacher_name, course_code, field_code):
         """
-        define a course with write function in
+        define a course with write_db function in read_courses module
         :return: nothing
         """
 
@@ -27,11 +35,11 @@ class Admin(User):
     def show_students(self, students_list):
         """
         Show students list whit specifications.
-        :param students_list: list of Student in same field with admin
+        :param students_list: list of Student with same field with admin creat in read_databases file
         :return: nothing
         """
         table = PrettyTable(
-            ['id', 'first name', 'last name', 'field name', 'field code'])  # create table of students with same field
+            ['id', 'first name', 'last name', 'field name', 'field code'])
         for student in students_list:
             if student.field_code == self.field_code:
                 table.add_row(
@@ -41,36 +49,43 @@ class Admin(User):
     @staticmethod
     def choose_student(user_id, student):
         """
-        Choose student with id and then show selected units and lessons
-        :param user_id: id for selected user that admin want to see lessons
+        Choose student by student id and show her courses information
+        :param user_id: user_id for student that admin want to see her courses
         :param student: Object of Student class
         :return: nothing
         """
-        # for user in students_list:
-
-        table = PrettyTable(
-            ['course code', 'course name', 'units', 'teacher name', 'field code'])
         if student.user_id == user_id:
-            for lesson in student.chosen_courses:
-                table.add_row(
-                    [lesson.course_code, lesson.name, lesson.units, lesson.teacher_name, lesson.field_code])
-            print(table)
-
+            if student.check_submission():
+                student.show_submitted_courses()
+                return True
+            else:
+                return False
     @staticmethod
     def check_student_course(student, status):
         """
-        Check student courses and pass or reject
+        Check student courses and approve or reject them
         :param student: object of Student class
-        :param status: admin status for pass(True) or reject(False)
+        :param status: admin status for approve(True) or reject(False)
         :return: nothing
         """
-        if student.submit():  # if student submitted her courses
-            if not status:  # if number of student units are not acceptable
-                student.take_courses_status = False
-                logging.error("Courses Rejected")
+        if student.check_submission():# if student submitted her courses
+            if not status:
+                with open('../databases/users_db/students_info.json') as std_info:
+                    info = json.load(std_info)
+                    student_info = info[f'{student.user_id}']
+                    student_info[0]['courses_status'] = False
+                    info.update(student_info[0])
+                with open('../databases/users_db/students_info.json', 'w') as std_info:
+                    json.dump(info, std_info)
+                logging.error("Reject student courses")
             else:
-                student.take_courses_status = True
-                logging.info("Courses Submitted")
-        else:  # if student didn't submit courses
-            student.take_courses_status = False
-            logging.error("Courses not Submitted")
+                with open('../databases/users_db/students_info.json') as std_info:
+                    info = json.load(std_info)
+                    student_info = info[f'{student.user_id}']
+                    student_info[0]['courses_status'] = True
+                    info.update(student_info[0])
+                # with open('../databases/users_db/students_info.json', 'w') as std_info:
+                #     json.dump(info, std_info)
+                logging.info("Approve student courses ")
+        else:  # if student didn't submit her courses
+            logging.error('Try check student courses before submission')

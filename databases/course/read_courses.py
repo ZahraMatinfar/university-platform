@@ -6,6 +6,7 @@ my_file = os.path.join(THIS_FOLDER, 'courses.csv')
 
 
 def read_db():
+    # create list of course objects from database
     courses_list = []
     with open(my_file, 'r', newline='') as csv_file:
         csv_reader = csv.DictReader(csv_file)

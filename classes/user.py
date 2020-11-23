@@ -37,7 +37,7 @@ class User:
 
     def logout(self):
         """
-        by calling this method login status will change to False(The user exits the messenger)
+        by calling this method login status will change to False(The user exits the platform)
         :return: login status
         """
         self.login_status = False
