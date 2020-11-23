@@ -36,8 +36,7 @@ def student_login(student):
 
             else:
                 # student can take courses just in 2 case:she have not submitted yet or she submit but rejected by admin
-                if ((student.check_submission() is False) and (student.take_courses_status is True)) or (
-                        (student.check_submission() is True) and (student.take_courses_status is False)):
+                if student.take_course_permission():
                     try:
                         course_code = int(input('course code:'))
                     except ValueError:
@@ -67,21 +66,23 @@ def student_login(student):
 
         elif choice == 3:
             # student can drop courses just in 2 case:she have not submitted yet or she submit but rejected by admin
-            if ((student.check_submission() is False) and (student.take_courses_status is True)) or (
-                    (student.check_submission() is True) and (student.take_courses_status is False)):
-                student.show_chosen_courses()
-                try:
-                    course_code = int(input('course code:'))
-                except ValueError:
-                    print('invalid input,Enter a number .\n')
-                    logging.exception('invalid input for course code[Try drop course]')
+            if student.take_course_permission():
+                if len(student.chosen_courses)== 0:
+                    print('No courses have been added yet.')
+                    logging.warning('Try drop course with no chosen courses')
                 else:
-                    if student.drop_course(course_code):
-                        print('Course dropped successfully.')
-                        logging.info('Student dropped a course')
+                    try:
+                        course_code = int(input('course code:'))
+                    except ValueError:
+                        print('invalid input,Enter a number .\n')
+                        logging.exception('invalid input for course code[Try drop course]')
                     else:
-                        print('Code is not valid.')
-                        logging.warning('invalid course code for dropping')
+                        if student.drop_course(course_code):
+                            print('Course dropped successfully.')
+                            logging.info('Student dropped a course')
+                        else:
+                            print('Code is not valid.')
+                            logging.warning('invalid course code for dropping')
             else:
                 print('You can not drop courses at this time')
                 logging.error('Try drop course after successful submission')
@@ -91,7 +92,7 @@ def student_login(student):
             # if she submitted read them from students_info file
             if student.check_submission():
                 # if courses approved by admin
-                if student.take_courses_status:
+                if student.check_status():
                     student.show_submitted_courses()
                 else:
                     print('your request has been rejected')

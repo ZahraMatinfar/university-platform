@@ -1,3 +1,4 @@
+import json
 import logging
 
 from prettytable import PrettyTable
@@ -67,13 +68,24 @@ class Admin(User):
         :param status: admin status for approve(True) or reject(False)
         :return: nothing
         """
-        if student.check_submission():  # if student submitted her courses
+        if student.check_submission():# if student submitted her courses
             if not status:
-                student.take_courses_status = False
-                logging.error("Courses Rejected")
+                with open('../databases/users_db/students_info.json') as std_info:
+                    info = json.load(std_info)
+                    student_info = info[f'{student.user_id}']
+                    student_info[0]['courses_status'] = False
+                    info.update(student_info[0])
+                with open('../databases/users_db/students_info.json', 'w') as std_info:
+                    json.dump(info, std_info)
+                logging.error("Reject student courses")
             else:
-                student.take_courses_status = True
-                logging.info("Courses Approved")
+                with open('../databases/users_db/students_info.json') as std_info:
+                    info = json.load(std_info)
+                    student_info = info[f'{student.user_id}']
+                    student_info[0]['courses_status'] = True
+                    info.update(student_info[0])
+                # with open('../databases/users_db/students_info.json', 'w') as std_info:
+                #     json.dump(info, std_info)
+                logging.info("Approve student courses ")
         else:  # if student didn't submit her courses
-            student.take_courses_status = True
             logging.error('Try check student courses before submission')

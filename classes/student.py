@@ -18,7 +18,7 @@ class Student(User):
 
     # initialize student attributes
     def __init__(self, username, password, user_id, first_name, last_name, user_type, field_name, field_code):
-        self.take_courses_status = True
+        # self.take_courses_status = True
         self.total_units = 0
         self.chosen_courses = []
         super().__init__(username, password, user_id, first_name, last_name, user_type, field_name, field_code)
@@ -48,9 +48,9 @@ class Student(User):
         check number of student units
         :return: 0 for acceptable number,1 for more than allowed number,-1 for less than allowed number
         """
-        if self.total_units > 20:
+        if self.total_units > 6:
             return 1
-        elif self.total_units < 10:
+        elif self.total_units < 1:
             return -1
         else:
             return 0
@@ -130,6 +130,7 @@ class Student(User):
         """print student chosen courses"""
         if len(self.chosen_courses) == 0:
             print('No courses have been added yet.')
+
         else:
             table = PrettyTable(
                 ['course code', 'course name', 'units', 'teacher name', 'field code', 'total quantity'])
@@ -139,6 +140,7 @@ class Student(User):
                     [lesson.course_code, lesson.name, lesson.units, lesson.teacher_name, lesson.field_code,
                      lesson.total_quantity])
             print(table)
+
 
     def submit(self):
         """
@@ -152,7 +154,8 @@ class Student(User):
                 # json_data is dictionary of students id that they are submitted
                 json_data = json.load(std_info)
                 # vars() creat dictionary of object attributes ant their values
-                student_dict = {f'{self.user_id}': [vars(course) for course in self.chosen_courses]}
+                student_dict = {
+                    f'{self.user_id}': [{'courses_status': True}, [vars(course) for course in self.chosen_courses]]}
             json_data.update(student_dict)
             with open('../databases/users_db/students_info.json', 'w') as std_info:
                 json.dump(json_data, std_info)
@@ -182,7 +185,7 @@ class Student(User):
             info = json.load(std_info)
             table = PrettyTable(
                 ['course code', 'course name', 'units', 'teacher name', 'field code', 'total quantity'])
-            for course in info[f'{self.user_id}']:
+            for course in info[f'{self.user_id}'][1]:
                 values = []
                 for i in ['course_code', 'name', 'units', 'teacher_name', 'field_code', 'total_quantity']:
                     values.append(course[i])
@@ -190,3 +193,20 @@ class Student(User):
                 units += course['units']
             print(f'TOTAL UNITS : {units}')
             print(table)
+
+    def check_status(self):
+        if self.check_submission():
+            with open('../databases/users_db/students_info.json') as std_info:
+                info = json.load(std_info)
+                student_info = info[f'{self.user_id}']
+                courses_status = student_info[0]['courses_status']
+                return courses_status
+        else:
+            return True
+
+    def take_course_permission(self):
+        if ((self.check_submission() is False) and (self.check_status() is True)) or (
+                (self.check_submission() is True) and (self.check_status() is False)):
+            return True
+        else:
+            return False
