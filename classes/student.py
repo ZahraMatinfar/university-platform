@@ -122,7 +122,6 @@ class Student(User):
                 course.remaining_quantity += 1
                 self.total_units -= course.units
                 self.chosen_courses.remove(course)
-                self.chosen_courses.remove(course)
                 return True
         else:
             return False

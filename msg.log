@@ -254,3 +254,18 @@ ValueError: invalid literal for int() with base 10: ''
 2020-11-23 03:58:00,366 - INFO- Student logged out
 2020-11-23 03:58:28,002 - INFO- Successful login
 2020-11-23 03:58:38,667 - INFO- Student added a new course
+2020-11-23 12:44:39,023 - INFO- Successful login
+2020-11-23 12:45:19,928 - ERROR- Try drop course after successful submission
+2020-11-23 12:45:28,408 - ERROR- Try take course after successful submission
+2020-11-23 12:45:45,757 - INFO- Student logged out
+2020-11-23 12:46:05,470 - INFO- Successful login
+2020-11-23 12:46:34,473 - INFO- Student added a new course
+2020-11-23 12:46:39,662 - WARNING- Try take existing course again 
+2020-11-23 12:52:06,998 - INFO- Successful login
+2020-11-23 12:52:24,631 - INFO- Student added a new course
+2020-11-23 12:52:27,441 - WARNING- Try take existing course again 
+2020-11-23 12:52:35,555 - INFO- Student dropped a course
+2020-11-23 12:52:50,969 - INFO- Student logged out
+2020-11-23 12:53:38,406 - INFO- Successful login
+2020-11-23 12:55:19,597 - WARNING- Try defined course for other fields
+2020-11-23 13:07:24,923 - INFO- Admin logout
