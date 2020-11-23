@@ -76,4 +76,4 @@ class Admin(User):
                 logging.info("Courses Approved")
         else:  # if student didn't submit her courses
             student.take_courses_status = True
-            logging.error("Courses not Submitted")
+            logging.error('Try check student courses before submission')
