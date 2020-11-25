@@ -95,9 +95,12 @@ def student_login(student):
                 # if courses approved by admin
                 if student.check_status():
                     student.show_submitted_courses()
-                else:
-                    print('your request has been rejected')
-                    logging.warning('Student courses rejected')
+                elif student.check_status() is False:
+                    if len(student.chosen_courses)!= 0:
+                        student.show_chosen_courses()
+                    else:
+                        print('your request has been rejected')
+                        logging.warning('Student courses rejected')
             # if student didnt submit show courses from chosen courses
             else:
                 print(f' TOTAL UNITS : {student.total_units}')

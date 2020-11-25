@@ -36,10 +36,14 @@ def admin_login(admin):
                 if name and int(units) and int(total_quantity) and teacher_name and int(course_code) and int(
                         field_code) != '':
                     # admin can define courses just for his field
-                    if admin.field_code == field_code or field_code == '0':
-                        admin.define_course(name, units, total_quantity, teacher_name, course_code, field_code)
-                        print('New course is defined successfully.\n')
-                        logging.info("New course defined!")
+                    if admin.field_code == int(field_code) or field_code == '0':
+                        define_course= admin.define_course(name, units, total_quantity, teacher_name, course_code, field_code)
+                        if define_course:
+                            print('New course is defined successfully.\n')
+                            logging.info("New course defined!")
+                        else:
+                            print('This course has been defined already')
+                            logging.warning('Try define existing course')
                     else:
                         print("You can not define  any course for other fields!!")
                         logging.warning("Try defined course for other fields")
