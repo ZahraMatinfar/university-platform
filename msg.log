@@ -81,3 +81,74 @@ ValueError: invalid literal for int() with base 10: ''
 2020-11-23 22:13:27,754 - INFO- user exit
 2020-11-23 22:13:54,143 - INFO- Successful login
 2020-11-23 22:14:17,235 - INFO- New course defined!
+2020-11-25 10:25:53,458 - INFO- Successful login
+2020-11-25 10:26:20,920 - INFO- Student added a new course
+2020-11-25 10:26:34,788 - WARNING- Unavailable option input in student menu
+2020-11-25 10:26:54,288 - ERROR- invalid input in student menu
+Traceback (most recent call last):
+  File "D:\maktab\python_project\final_test\run_project\student_login.py", line 17, in student_login
+    choice = int(input('your choice:'))
+ValueError: invalid literal for int() with base 10: 'aaa'
+2020-11-25 10:27:07,794 - INFO- Student dropped a course
+2020-11-25 10:27:13,792 - WARNING- Student courses rejected
+2020-11-25 10:30:38,119 - INFO- Student added a new course
+2020-11-25 10:30:41,195 - WARNING- Student courses rejected
+2020-11-25 10:35:08,081 - INFO- Successful login
+2020-11-25 10:36:14,699 - INFO- Successful login
+2020-11-25 10:36:16,795 - WARNING- Student courses rejected
+2020-11-25 10:36:23,275 - INFO- Student added a new course
+2020-11-25 10:36:41,897 - INFO- Student dropped a course
+2020-11-25 10:36:46,979 - WARNING- Student courses rejected
+2020-11-25 10:37:45,695 - INFO- Student added a new course
+2020-11-25 10:37:49,574 - WARNING- Try take unavailable course for student
+2020-11-25 10:38:05,123 - INFO- Student added a new course
+2020-11-25 10:38:08,289 - INFO- Student added a new course
+2020-11-25 10:38:20,410 - INFO- Student added a new course
+2020-11-25 10:38:28,567 - INFO- Student submitted courses
+2020-11-25 10:38:34,957 - INFO- Student logged out
+2020-11-25 10:38:54,355 - INFO- Successful login
+2020-11-25 10:39:18,244 - ERROR- invalid input.[Try choose student]
+2020-11-25 10:39:26,551 - ERROR- Unavailable option input in admin menu
+2020-11-25 10:39:44,816 - ERROR- Try search unavailable student id
+2020-11-25 10:40:01,916 - INFO- Approve student courses 
+2020-11-25 10:40:01,916 - INFO- Admin changed 97991013 status to True 
+2020-11-25 10:40:06,245 - INFO- Admin logout
+2020-11-25 10:40:16,973 - INFO- Successful login
+2020-11-25 10:40:22,850 - ERROR- Try take course after successful submission
+2020-11-25 10:40:37,768 - INFO- Student logged out
+2020-11-25 10:40:47,467 - INFO- Successful login
+2020-11-25 10:45:53,575 - WARNING- Try defined course for other fields
+2020-11-25 10:49:01,232 - INFO- Successful login
+2020-11-25 10:49:21,375 - INFO- New course defined!
+2020-11-25 10:49:30,770 - INFO- Admin logout
+2020-11-25 10:49:55,649 - INFO- Successful login
+2020-11-25 10:57:38,560 - ERROR- Wrong username or password
+2020-11-25 10:57:47,710 - INFO- Successful login
+2020-11-25 10:58:43,228 - INFO- New course defined!
+2020-11-25 11:02:41,601 - INFO- Successful login
+2020-11-25 11:02:59,523 - INFO- New course defined!
+2020-11-25 11:03:41,925 - ERROR- Wrong username or password
+2020-11-25 11:03:51,098 - INFO- Successful login
+2020-11-25 11:04:12,071 - INFO- New course defined!
+2020-11-25 11:05:58,307 - ERROR- Wrong username or password
+2020-11-25 11:06:00,334 - WARNING- Unavailable option input in menu
+2020-11-25 11:06:00,457 - ERROR- invalid input in main function
+Traceback (most recent call last):
+  File "D:/maktab/python_project/final_test/run_project/run.py", line 48, in main
+    choice = int(input('your choice:'))
+ValueError: invalid literal for int() with base 10: ''
+2020-11-25 11:06:02,060 - WARNING- Unavailable option input in menu
+2020-11-25 11:06:15,570 - INFO- Successful login
+2020-11-25 11:06:37,296 - ERROR- Invalid input in admin menu
+2020-11-25 11:06:55,558 - INFO- New course defined!
+2020-11-25 11:09:04,572 - INFO- Successful login
+2020-11-25 11:09:19,934 - WARNING- Try define existing course
+2020-11-25 11:10:07,640 - ERROR- Reject student courses
+2020-11-25 11:10:07,640 - INFO- Admin changed 97991013 status to False 
+2020-11-25 11:10:20,573 - INFO- Admin logout
+2020-11-25 11:10:48,424 - INFO- Successful login
+2020-11-25 11:11:03,041 - INFO- Student added a new course
+2020-11-25 11:11:18,078 - WARNING- invalid course code for dropping
+2020-11-25 11:11:36,117 - WARNING- Try take existing course again 
+2020-11-25 11:11:50,463 - INFO- Student dropped a course
+2020-11-25 11:11:56,968 - WARNING- Student courses rejected

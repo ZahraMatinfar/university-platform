@@ -27,11 +27,15 @@ class Admin(User):
     def define_course(name, units, total_quantity, teacher_name, course_code, field_code):
         """
         define a course with write_db function in read_courses module
-        :return: nothing
+        :return: False if course has been defined already else True
         """
-
-        db.write_db(name, units, total_quantity, teacher_name, course_code, field_code)
-
+        courses= db.read_db()
+        for course in courses:
+            if str(course_code) == course['course_code']:
+                return False
+        else:
+            db.write_db(name, units, total_quantity, teacher_name, course_code, field_code)
+            return True
     def show_students(self, students_list):
         """
         Show students list whit specifications.
